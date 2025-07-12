@@ -8,11 +8,7 @@ import FreeSampleButton from '@/components/FreeSampleButton'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import ScrollToTopButton from '@/components/ScrollToTopButton'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
-import Head from 'next/head'
-
 const inter = Inter({ subsets: ['latin'] })
-
-
 
 export const metadata: Metadata = {
   title: 'Balaji Exports - Premium Peanut Exporters from India',
@@ -23,6 +19,16 @@ export const metadata: Metadata = {
   },
   keywords: 'peanut exporters, groundnut exporters, bulk peanuts, wholesale peanuts, Indian peanuts, export quality peanuts',
   authors: [{ name: 'Balaji Exports' }],
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   openGraph: {
     title: 'Balaji Exports - Premium Peanut Exporters from India',
     description: 'Leading exporters of premium quality peanuts and groundnuts from India. FSSAI, HACCP, ISO certified.',
@@ -54,10 +60,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Head>
-      <link rel="icon" href="/favicon.ico" />
-      <link rel="icon" href="/favicon.png" type="image/png" />
-      </Head>
       <body className={inter.className}>
         <GoogleAnalytics />
         <ThemeProvider>
