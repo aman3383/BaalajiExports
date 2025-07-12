@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "baalajiexports"
+  },
+  "targets": {
+    "baalajiexports": {
+      "hosting": {
+        "baalajiexports": [
+          "baalajiexports"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
