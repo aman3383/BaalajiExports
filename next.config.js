@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable static export for Firebase Hosting
-  output: 'export',
-  trailingSlash: true,
+  // trailingSlash: true,
   
 
   
