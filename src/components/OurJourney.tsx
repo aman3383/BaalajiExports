@@ -5,7 +5,9 @@ import {
   Box, 
   Container, 
   Typography, 
-  useTheme
+  Grid,
+  useTheme,
+  Paper
 } from '@mui/material';
 import Image from 'next/image';
 import ourJourneyImage1 from '@/assets/images/Home/OurJourney1_optimized.webp';
@@ -33,21 +35,13 @@ const OurJourney = () => {
   };
 
   return (
-    <Box
-      id="our-journey-section"
-      sx={{
-        pt: { xs: 10, sm: 12, md: 14 },
-        pb: { xs: 5, sm: 6, md: 8 },
-        backgroundColor: theme.palette.background.default,
-        scrollMarginTop: { xs: '80px', sm: '100px' },
-      }}
-    >
+    <Box sx={{ py: 8, backgroundColor: theme.palette.background.default }}>
       <Container maxWidth="lg">
         <Box sx={{
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
           gap: { xs: 3, md: 4 },
-          alignItems: 'stretch',
+          alignItems: 'center',
           justifyContent: 'center',
         }}>
           {/* Our Journey Card */}
@@ -57,7 +51,6 @@ const OurJourney = () => {
             display: 'flex',
             alignItems: 'center',
             order: { xs: 2, md: 1 },
-            mb: { xs: 2, md: 0 },
           }}>
             <GradientCard
               title="Our Journey"
@@ -65,23 +58,19 @@ const OurJourney = () => {
                 'At Balaji Exports, our journey began decades ago on fertile lands, where generations of farmers dedicated themselves to cultivating the finest organic groundnuts India offers. Today, we combine this rich heritage with cutting-edge technology and operate a state-of-the-art groundnut processing unit.'
               }
               gradient="greenDark"
-              height={320}
+              height={220}
               cardSx={{
                 width: '100%',
                 borderRadius: 2,
                 boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
                 background: theme.customGradients.greenDark,
-                minHeight: { xs: 260, sm: 320, md: 340 },
-                p: { xs: 3, sm: 4, md: 5 },
               }}
               contentSx={{
-                p: 0,
+                p: { xs: 2.5, sm: 3, md: 3, lg: 3.5 },
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                fontSize: { xs: '1.08rem', sm: '1.18rem', md: '1.22rem' },
-                mt: { xs: 2, sm: 3 },
               }}
               buttonText={undefined}
             />
@@ -90,15 +79,14 @@ const OurJourney = () => {
           <Box
             sx={{
               width: { xs: '100%', md: '42%', lg: '44%' },
-              minHeight: { xs: 240, sm: 300, md: 400, lg: 500 },
-              height: { xs: 260, sm: 320, md: 400, lg: 500 },
+              height: { xs: 350, sm: 400, md: 500, lg: 600 },
               position: 'relative',
               overflow: 'hidden',
               borderRadius: 2,
               boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
               transition: 'transform 0.3s, box-shadow 0.3s',
               mx: { xs: 0, sm: 2, md: 0 },
-              mt: { xs: 2, sm: 0, md: 0 },
+              mt: { xs: -1, sm: 0, md: 0 },
               order: { xs: 1, md: 2 },
               '&:hover': {
                 transform: 'translateY(-5px)',
@@ -114,11 +102,9 @@ const OurJourney = () => {
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
-                objectPosition: 'center top',
+                objectPosition: 'top center',
                 transition: 'transform 0.3s ease',
               }}
-              sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 44vw"
-              priority
             />
             <Box
               sx={{
@@ -132,38 +118,10 @@ const OurJourney = () => {
             />
             {/* Carousel Arrows */}
             <Box sx={{ position: 'absolute', top: '50%', left: 10, transform: 'translateY(-50%)', zIndex: 2 }}>
-              <button 
-                onClick={handlePrev} 
-                style={{ 
-                  background: 'rgba(255,255,255,0.85)', 
-                  border: 'none', 
-                  borderRadius: '50%', 
-                  width: 40, 
-                  height: 40, 
-                  cursor: 'pointer', 
-                  fontSize: 24, 
-                  fontWeight: 'bold', 
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.15)' 
-                }}
-                aria-label="Previous image"
-              >&lt;</button>
+              <button onClick={handlePrev} style={{ background: 'rgba(255,255,255,0.7)', border: 'none', borderRadius: '50%', width: 36, height: 36, cursor: 'pointer', fontSize: 22, fontWeight: 'bold', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>&lt;</button>
             </Box>
             <Box sx={{ position: 'absolute', top: '50%', right: 10, transform: 'translateY(-50%)', zIndex: 2 }}>
-              <button 
-                onClick={handleNext} 
-                style={{ 
-                  background: 'rgba(255,255,255,0.85)', 
-                  border: 'none', 
-                  borderRadius: '50%', 
-                  width: 40, 
-                  height: 40, 
-                  cursor: 'pointer', 
-                  fontSize: 24, 
-                  fontWeight: 'bold', 
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.15)' 
-                }}
-                aria-label="Next image"
-              >&gt;</button>
+              <button onClick={handleNext} style={{ background: 'rgba(255,255,255,0.7)', border: 'none', borderRadius: '50%', width: 36, height: 36, cursor: 'pointer', fontSize: 22, fontWeight: 'bold', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>&gt;</button>
             </Box>
           </Box>
         </Box>
@@ -172,4 +130,4 @@ const OurJourney = () => {
   );
 };
 
-export default OurJourney;
+export default OurJourney; 

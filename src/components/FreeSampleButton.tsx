@@ -81,7 +81,7 @@ const FreeSampleButton = () => {
             fontSize: { xs: "0.65rem", md: "0.875rem" }
           }}
         >
-          Want samples! Click here.
+          Samples! Click here.
         </Typography>
       </Box>
 
@@ -148,11 +148,11 @@ const FreeSampleButton = () => {
             mb: 0.5
           }}
         >
-          🥜
+          📦
         </Typography>
         <Typography
           sx={{
-            fontSize: { xs: "10px", md: "11px" },
+            fontSize: { xs: "10px", md: "12px" },
             fontWeight: "bold",
             color: theme.palette.customColors.darkGold,
             fontFamily: "Inter, sans-serif",

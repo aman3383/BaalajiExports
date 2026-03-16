@@ -1,34 +1,26 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import BoldPeanutContent from './BoldPeanutContent';
+import { getPageSEO } from '@/lib/utils/seo';
 
-export const metadata: Metadata = {
-  title: "Premium Bold Peanuts - High Quality Indian Groundnuts | Balaji Exports",
-  description: "Discover premium quality Bold Peanuts from India. FSSAI, HACCP, and ISO certified groundnuts perfect for peanut butter, snacks, and oil extraction. Competitive bulk pricing.",
-  keywords: "Bold Peanuts, Indian Groundnuts, Peanut Exporters, Groundnut Suppliers, Peanut Butter, Snack Manufacturing, Oil Extraction, FSSAI Certified, HACCP Certified, ISO Certified, Bulk Peanuts, Wholesale Groundnuts, Peanut Importers, Groundnut Companies, Peanut Export Business, Groundnut Prices, Edible Peanuts, Lab Tested Groundnuts, Hygienic Packaging, Peanut Export Company, Groundnuts from India, Peanut Exporters from India to UAE, Groundnut Companies in Rajasthan, Groundnut Companies in Gujarat, Groundnut Companies in Andhra Pradesh, Peanut Importers Worldwide, Wholesale Peanuts Suppliers in India, Groundnut Prices Per Ton, Buy Groundnuts in Bulk, Best Quality Groundnuts from India",
-  openGraph: {
-    title: "Premium Bold Peanuts - High Quality Indian Groundnuts | Balaji Exports",
-    description: "Discover premium quality Bold Peanuts from India. FSSAI, HACCP, and ISO certified groundnuts perfect for peanut butter, snacks, and oil extraction. Competitive bulk pricing.",
-    url: "https://balajiexports.com/products/bold-peanuts",
-    siteName: "Balaji Exports",
-    images: [
-      {
-        url: "https://balajiexports.com/images/bold-peanuts-og.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Premium Bold Peanuts from India"
-      }
-    ],
-    locale: "en_US",
-    type: "website"
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Premium Bold Peanuts - High Quality Indian Groundnuts | Balaji Exports",
-    description: "Discover premium quality Bold Peanuts from India. FSSAI, HACCP, and ISO certified groundnuts perfect for peanut butter, snacks, and oil extraction. Competitive bulk pricing.",
-    images: ["https://balajiexports.com/images/bold-peanuts-og.jpg"]
+// Force static generation for better crawling
+export const dynamic = 'force-static';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seoData = await getPageSEO('bold-peanuts');
+  
+  if (seoData) {
+    return seoData;
   }
-};
+
+  // Return empty metadata if not found in database
+  return {};
+}
 
 export default function BoldPeanutPage() {
-  return <BoldPeanutContent />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BoldPeanutContent />
+    </Suspense>
+  );
 } 

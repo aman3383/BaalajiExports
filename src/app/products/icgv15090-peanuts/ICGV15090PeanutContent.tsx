@@ -10,15 +10,14 @@ import Fade from '@mui/material/Fade';
 import type { Metadata } from 'next';
 import ProductIntroTiles from '@/components/ProductIntroTiles';
 import ProductCarousel from '@/components/ProductCarousel';
-
-// Import certification logos
+import KeyFeaturesCarousel from '@/components/KeyFeaturesCarousel';
 import CertificationsCarousel from '@/components/CertificationsCarousel';
 
-// Import application icons
+// Import certification logos
 import peanutButterIcon from '@/assets/images/PeanutButter.png';
 import groundnutOilIcon from '@/assets/images/GroundNutOil.png';
 
-// Import product image
+// Import application icons
 import icgv15090ProductImage from '@/assets/images/productImg/ICGV15090Product.webp';
 
 // Import key feature images
@@ -74,7 +73,7 @@ const ICGV15090PeanutPage = () => {
             >
               <Image
                 src={icgv15090ProductImage}
-                alt="ICGV-15090/ Girnar 5 Premium High Oleic Peanuts"
+                alt="ICGV-15090 Premium High Oleic Peanuts"
                 fill
                 style={{ 
                   objectFit: 'cover',
@@ -111,7 +110,7 @@ const ICGV15090PeanutPage = () => {
                 }
               }}
             >
-              ICGV-15090/ Girnar 5 Peanuts – Premium High Oleic Groundnuts for Health-Conscious and Export Markets
+              ICGV-15090 Peanuts – Premium High Oleic Groundnuts for Health-Conscious and Export Markets
             </Typography>
             <Typography 
               variant="body1" 
@@ -123,7 +122,7 @@ const ICGV15090PeanutPage = () => {
                 lineHeight: 1.8,
               }}
             >
-              <span style={{ fontWeight: 700 }}> ICGV-15090/ Girnar 5 is a high-oleic peanut </span>
+              <span style={{ fontWeight: 700 }}> ICGV-15090 is a high-oleic peanut </span>
               variety developed for improved shelf life, oil stability, and nutritional value. 
               These groundnuts are particularly suited for premium export markets, health-conscious food products, and high-quality peanut oil production.
             </Typography>
@@ -151,7 +150,7 @@ const ICGV15090PeanutPage = () => {
                 lineHeight: 1.8,
               }}
             >
-              At Balaji Exports, we source and supply ICGV-15090/ Girnar 5 peanuts that meet strict global food safety and quality standards, ideal for retail, wholesale, and industrial applications.
+              At Balaji Exports, we source and supply ICGV-15090 peanuts that meet strict global food safety and quality standards, ideal for retail, wholesale, and industrial applications.
             </Typography>
             
             <Box sx={{ mb: 3, maxWidth: '500px' }}>
@@ -172,7 +171,7 @@ const ICGV15090PeanutPage = () => {
             mx: 'auto'
           }}
         >
-          ICGV-15090/ Girnar 5 peanuts are the perfect blend of nutrition, performance, and export readiness — a smart choice for health food manufacturers, oil processors, and premium distributors.
+          ICGV-15090 peanuts are the perfect blend of nutrition, performance, and export readiness — a smart choice for health food manufacturers, oil processors, and premium distributors.
         </Typography>
       </Container>
 
@@ -253,7 +252,7 @@ const ICGV15090PeanutPage = () => {
               lineHeight: 1.8
             }}
           >
-            ICGV-15090/ Girnar 5 peanuts are highly versatile with exceptional nutritional properties and consistent quality, 
+            ICGV-15090 peanuts are highly versatile with exceptional nutritional properties and consistent quality, 
             making them suitable for various industrial and commercial applications. Our premium peanuts 
             are specifically cultivated to meet the demanding requirements of the following industries:
           </Typography>
@@ -363,7 +362,7 @@ const ICGV15090PeanutPage = () => {
               background: 'rgba(255,255,255,0.07)'
             }}
           >
-            Our ICGV-15090/ Girnar 5 peanuts' consistent quality ensures reliable performance across all these applications, 
+            Our ICGV-15090 peanuts' consistent quality ensures reliable performance across all these applications, 
             making them a preferred choice for businesses requiring premium ingredients.
           </Typography>
         </Container>
@@ -512,7 +511,7 @@ const ICGV15090PeanutPage = () => {
                 fontSize: { xs: '1.6rem', sm: '1.8rem', md: '2rem' }
               }}
             >
-              Why Choose Our ICGV-15090/ Girnar 5 Peanuts?
+              Why Choose Our ICGV-15090 Peanuts?
             </Typography>
             
             <Typography 
@@ -538,7 +537,7 @@ const ICGV15090PeanutPage = () => {
                 }
               }}
             >
-              Food industries requiring consistent size and flavor for premium products and international applications choose our ICGV-15090/ Girnar 5 peanuts for reliable quality.
+              Food industries requiring consistent size and flavor for premium products and international applications choose our ICGV-15090 peanuts for reliable quality.
             </Typography>
 
             <Typography 
@@ -615,7 +614,7 @@ const ICGV15090PeanutPage = () => {
                 }
               }}
             >
-              Partner with Balaji Exports, the top peanut export company in India, and source the highest quality ICGV-15090/ Girnar 5 peanuts for your global needs. Trust our experience, quality, and commitment to deliver the best from India's fertile fields to your business.
+              Partner with Balaji Exports, the top peanut export company in India, and source the highest quality ICGV-15090 peanuts for your global needs. Trust our experience, quality, and commitment to deliver the best from India's fertile fields to your business.
             </Typography>
             
             <Box sx={{ textAlign: 'center', mt: 6 }}>
@@ -624,7 +623,7 @@ const ICGV15090PeanutPage = () => {
                 component={Link}
                 href="/contact"
                 size="large"
-                aria-label="Request a quotation for ICGV-15090/ Girnar 5 Peanuts"
+                aria-label="Request a quotation for ICGV-15090 Peanuts"
                 sx={{ 
                   bgcolor: theme.palette.primary.main,
                   fontFamily: 'Inter, sans-serif',
@@ -668,7 +667,7 @@ const ICGV15090PeanutPage = () => {
             }}
           >
             <Link href="/" style={{ color: 'inherit', textDecoration: 'none' }}>Home</Link> {'>'}
-            <span style={{ color: theme.palette.primary.main }}>ICGV-15090/ Girnar 5 Peanuts</span>
+            <span style={{ color: theme.palette.primary.main }}>ICGV-15090 Peanuts</span>
           </Typography>
         </nav>
       </Container>
@@ -698,6 +697,7 @@ const ProductSpecifications = () => {
         { name: "Foreign Material", value: "Max 0.5%" },
       ]
     },
+
     packaging: {
       title: "Packaging & Storage",
       icon: <LocalShippingIcon />,
@@ -754,7 +754,7 @@ const ProductSpecifications = () => {
             fontFamily: 'Inter, sans-serif',
           }}
         >
-          Our ICGV-15090/ Girnar 5 peanuts meet the highest quality standards for international markets
+          Our ICGV-15090 peanuts meet the highest quality standards for international markets
         </Typography>
       </Box>
 
@@ -853,128 +853,6 @@ const ProductSpecifications = () => {
               ))}
             </Box>
           </Paper>
-        ))}
-      </Box>
-    </Box>
-  );
-};
-
-const KeyFeaturesCarousel = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState(false);
-
-  const images = [
-    { src: keyFeatureImg1, alt: "Key Feature Image 1" },
-    { src: keyFeatureImg2, alt: "Key Feature Image 2" },
-    { src: keyFeatureImg3, alt: "Key Feature Image 3" },
-    { src: keyFeatureImg4, alt: "Key Feature Image 4" },
-    { src: keyFeatureImg5, alt: "Key Feature Image 5" },
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => 
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
-      );
-      setImageLoaded(false);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [images.length]);
-
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) => 
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-    setImageLoaded(false);
-  };
-
-  const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => 
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
-    setImageLoaded(false);
-  };
-
-  return (
-    <Box sx={{ 
-      position: 'relative',
-      width: '100%',
-      height: '100%',
-      borderRadius: 3,
-      overflow: 'hidden',
-      boxShadow: '0px 10px 20px rgba(0,0,0,0.1)'
-    }}>
-      <IconButton
-        onClick={handlePrevImage}
-        sx={{
-          position: 'absolute',
-          left: 10,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          zIndex: 2,
-          bgcolor: 'rgba(255, 255, 255, 0.8)',
-          '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' },
-          boxShadow: 2
-        }}
-      >
-        <ChevronLeft />
-      </IconButton>
-
-      <IconButton
-        onClick={handleNextImage}
-        sx={{
-          position: 'absolute',
-          right: 10,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          zIndex: 2,
-          bgcolor: 'rgba(255, 255, 255, 0.8)',
-          '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' },
-          boxShadow: 2
-        }}
-      >
-        <ChevronRight />
-      </IconButton>
-
-      <Fade in={true} timeout={500}>
-        <Box sx={{ width: '100%', height: '100%', position: 'relative' }}>
-          <Image
-            src={images[currentImageIndex].src}
-            alt={images[currentImageIndex].alt}
-            fill
-            style={{ objectFit: 'cover', opacity: imageLoaded ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}
-            onLoad={() => setImageLoaded(true)}
-            sizes="(max-width: 600px) 100vw, 50vw"
-          />
-        </Box>
-      </Fade>
-
-      <Box sx={{
-        position: 'absolute',
-        bottom: 10,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        display: 'flex',
-        gap: 1,
-        zIndex: 2
-      }}>
-        {images.map((_, index) => (
-          <Box
-            key={index}
-            onClick={() => setCurrentImageIndex(index)}
-            sx={{
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
-              bgcolor: currentImageIndex === index ? 'white' : 'rgba(255,255,255,0.5)',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                transform: 'scale(1.2)',
-              }
-            }}
-          />
         ))}
       </Box>
     </Box>

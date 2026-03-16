@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, Suspense } from 'react'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import Script from 'next/script'
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
@@ -13,22 +12,25 @@ declare global {
   }
 }
 
-function GoogleAnalyticsInner() {
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+export function GoogleAnalytics() {
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    if (!GA_MEASUREMENT_ID || typeof window.gtag === 'undefined') return
+    setIsClient(true)
+  }, [])
 
-    const url = pathname + searchParams.toString()
+  useEffect(() => {
+    if (!isClient || !GA_MEASUREMENT_ID || typeof window.gtag === 'undefined') return
+
+    // Track page view with current URL - no need for useSearchParams
+    const url = window.location.pathname + window.location.search
     
-    // Track page view
     window.gtag('config', GA_MEASUREMENT_ID, {
       page_path: url,
       page_title: document.title,
       page_location: window.location.href,
     })
-  }, [pathname, searchParams])
+  }, [isClient])
 
   if (!GA_MEASUREMENT_ID) {
     return null
@@ -55,14 +57,6 @@ function GoogleAnalyticsInner() {
         }}
       />
     </>
-  )
-}
-
-export function GoogleAnalytics() {
-  return (
-    <Suspense fallback={null}>
-      <GoogleAnalyticsInner />
-    </Suspense>
   )
 }
 

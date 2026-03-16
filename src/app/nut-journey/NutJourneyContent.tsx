@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { Box, Typography, IconButton, Fade, CircularProgress, Container, Button, Chip, ThemeProvider } from '@mui/material';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { Box, Typography, IconButton, Container, Button, Chip, ThemeProvider, Fade, CircularProgress } from '@mui/material';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTheme } from '@mui/material/styles';
 import theme from '@/assets/styles/theme';
 import type { StaticImageData } from "next/image";
 import Image from 'next/image';
-import Head from 'next/head';
+
 
 // Import images
 import F_Step1 from "@/assets/images/Farming/F_Step1.webp";
@@ -44,9 +44,15 @@ function useWindowWidth() {
   );
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const handleResize = () => setWindowWidth(window.innerWidth);
+    
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
   return windowWidth;
 }
@@ -54,27 +60,34 @@ function useWindowWidth() {
 // SEO component with useEffect cleanup
 const SEO = ({ title, description }: { title: string; description: string }) => {
   useEffect(() => {
-    const originalTitle = document.title;
-    document.title = title;
-    let metaDescription = document.querySelector('meta[name="description"]');
-    let createdMetaDescription = false;
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta');
-      (metaDescription as HTMLMetaElement).name = 'description';
-      document.head.appendChild(metaDescription);
-      createdMetaDescription = true;
-    }
-    const originalContent = (metaDescription as HTMLMetaElement).content;
-    (metaDescription as HTMLMetaElement).content = description;
-    return () => {
-      document.title = originalTitle;
-      if (createdMetaDescription) {
-        metaDescription.remove();
-      } else {
-        (metaDescription as HTMLMetaElement).content = originalContent;
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      const originalTitle = document.title;
+      document.title = title;
+      
+      let metaDescription = document.querySelector('meta[name="description"]');
+      let createdMetaDescription = false;
+      
+      if (!metaDescription) {
+        metaDescription = document.createElement('meta');
+        (metaDescription as HTMLMetaElement).name = 'description';
+        document.head.appendChild(metaDescription);
+        createdMetaDescription = true;
       }
-    };
+      
+      const originalContent = (metaDescription as HTMLMetaElement).content;
+      (metaDescription as HTMLMetaElement).content = description;
+      
+      return () => {
+        document.title = originalTitle;
+        if (createdMetaDescription && metaDescription) {
+          metaDescription.remove();
+        } else if (metaDescription) {
+          (metaDescription as HTMLMetaElement).content = originalContent;
+        }
+      };
+    }
   }, [title, description]);
+  
   return null;
 };
 
@@ -125,112 +138,69 @@ const getImageSrc = (img: string | StaticImageData | undefined) => typeof img ==
 
 // ProcessViewer component
 const ProcessViewer: React.FC<ProcessViewerProps> = ({ steps, title, description, badge }) => {
-  // Hydration state to ensure all effects and rendering only happen on the client
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(() => { setHydrated(true); }, []);
-
-  // Carousel state
   const [activeStep, setActiveStep] = useState(0);
-  const [animation, setAnimation] = useState(true);
-  const [autoPlay, setAutoPlay] = useState(true);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set());
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 600;
   const currentStep = useMemo(() => steps[activeStep], [steps, activeStep]);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Only run effects if hydrated
+  // Auto-play functionality for farming and processing steps
   useEffect(() => {
-    if (!hydrated) return;
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [hydrated]);
-
-  useEffect(() => { if (hydrated) setAutoPlay(true); }, [steps, hydrated]);
-
-  // Preload images only after hydration
-  useEffect(() => {
-    if (!hydrated) return;
-    if (typeof window === 'undefined') return;
-    const preloadImage = (src: string) => {
-      if (preloadedImages.has(src)) return;
-      const img = new window.Image();
-      img.src = src;
-      img.onload = () => {
-        setPreloadedImages(prev => new Set([...Array.from(prev), src]));
-      };
-    };
-    const currentImage = getImageSrc(currentStep.imageUrl);
-    const nextStep = (activeStep + 1) % steps.length;
-    const prevStep = (activeStep - 1 + steps.length) % steps.length;
-    const nextImage = steps[nextStep]?.imageUrl && getImageSrc(steps[nextStep]?.imageUrl);
-    const prevImage = steps[prevStep]?.imageUrl && getImageSrc(steps[prevStep]?.imageUrl);
-    if (currentImage) preloadImage(currentImage);
-    if (nextImage) preloadImage(nextImage);
-    if (prevImage) preloadImage(prevImage);
-  }, [activeStep, steps, currentStep.imageUrl, preloadedImages, hydrated]);
-
-  // Image load/transition handlers
-  const handleImageLoad = useCallback(() => {
-    setImageLoaded(true);
-    setAnimation(true);
-    setIsTransitioning(false);
-  }, []);
-
-  const handleImageError = useCallback(() => {
-    setImageLoaded(true);
-    setAnimation(true);
-    setIsTransitioning(false);
-  }, []);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    setImageLoaded(false);
-    setAnimation(false);
-    setIsTransitioning(true);
-  }, [activeStep, hydrated]);
-
-  // Carousel auto-play logic
-  useEffect(() => {
-    if (!hydrated) return;
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    if (autoPlay && !isTransitioning) {
-      timeoutRef.current = setTimeout(() => {
-        setActiveStep((prev) => (prev + 1) % steps.length);
-      }, 3000);
+    if ((title === "Peanut Farming Process" || title === "Peanut Processing System") && !isAutoPlaying) {
+      setIsAutoPlaying(true);
     }
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [autoPlay, activeStep, steps.length, isTransitioning, hydrated]);
+  }, [title]);
 
-  // Navigation handlers
-  const changeStep = useCallback((newStep: number) => {
-    if (newStep === activeStep || isTransitioning) return;
-    setAutoPlay(false);
-    setActiveStep(newStep);
-    setTimeout(() => setAutoPlay(true), 10000);
-  }, [activeStep, isTransitioning]);
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    
+    if (isAutoPlaying && (title === "Peanut Farming Process" || title === "Peanut Processing System")) {
+      interval = setInterval(() => {
+        setActiveStep((prevStep) => {
+          if (prevStep < steps.length - 1) {
+            return prevStep + 1;
+          } else {
+            return 0;
+          }
+        });
+      }, 3000); // Change step every 3 seconds
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [isAutoPlaying, title, steps.length]);
 
   const goToPreviousStep = useCallback(() => {
-    if (activeStep > 0) changeStep(activeStep - 1);
-    else changeStep(steps.length - 1);
-  }, [activeStep, changeStep, steps.length]);
+    if (activeStep > 0) {
+      setActiveStep(activeStep - 1);
+    } else {
+      setActiveStep(steps.length - 1);
+    }
+  }, [activeStep, steps.length]);
 
   const goToNextStep = useCallback(() => {
-    if (activeStep < steps.length - 1) changeStep(activeStep + 1);
-    else changeStep(0);
-  }, [activeStep, steps.length, changeStep]);
+    if (activeStep < steps.length - 1) {
+      setActiveStep(activeStep + 1);
+    } else {
+      setActiveStep(0);
+    }
+  }, [activeStep, steps.length]);
 
-  const goToStep = useCallback((stepIndex: number) => { changeStep(stepIndex); }, [changeStep]);
+  const goToStep = useCallback((stepIndex: number) => {
+    setActiveStep(stepIndex);
+  }, []);
 
-  // Only render after hydration
-  if (!hydrated) return null;
+  const pauseAutoPlay = useCallback(() => {
+    setIsAutoPlaying(false);
+  }, []);
 
- 
+  const resumeAutoPlay = useCallback(() => {
+    setIsAutoPlaying(true);
+  }, []);
+
   const imageContainerStyle = {
     width: '100%',
     height: { xs: '300px', sm: '400px', md: '450px' },
@@ -251,8 +221,8 @@ const ProcessViewer: React.FC<ProcessViewerProps> = ({ steps, title, description
     objectFit: 'cover',
     objectPosition: 'center',
     transition: 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out',
-    opacity: imageLoaded && !isTransitioning ? 1 : 0,
-    transform: imageLoaded ? 'scale(1)' : 'scale(1.02)',
+    opacity: 1,
+    transform: 'scale(1)',
     '&:hover': { transform: 'scale(1.02)' }
   };
 
@@ -297,56 +267,61 @@ const ProcessViewer: React.FC<ProcessViewerProps> = ({ steps, title, description
       <Box sx={{ position: 'relative' }}>
         <IconButton 
           onClick={goToPreviousStep} 
+          onMouseEnter={pauseAutoPlay}
+          onMouseLeave={resumeAutoPlay}
           sx={prevButtonStyle} 
           aria-label="Previous step"
-          disabled={isTransitioning}
         >
           <ChevronLeft size={24} />
         </IconButton>
         <IconButton 
           onClick={goToNextStep} 
+          onMouseEnter={pauseAutoPlay}
+          onMouseLeave={resumeAutoPlay}
           sx={nextButtonStyle} 
           aria-label="Next step"
-          disabled={isTransitioning}
         >
           <ChevronRight size={24} />
         </IconButton>
-        <Fade in={animation && imageLoaded} timeout={300}>
-          <Box>
-            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: { xs: 3, md: '4%' }, alignItems: { xs: 'stretch', md: 'flex-start' } }}>
+        <Box>
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: { xs: 3, md: '4%' }, alignItems: { xs: 'stretch', md: 'flex-start' } }}>
               <Box sx={{ width: { xs: '100%', md: '48%' }, position: 'relative' }}>
                 <Box sx={{ 
                   ...imageContainerStyle, 
                   transition: 'opacity 0.3s ease-in-out', 
-                  opacity: imageLoaded ? 1 : 0,
+                  opacity: 1,
                   position: 'relative'
                 }}>
-                  {!imageLoaded && (
-                    <CircularProgress 
-                      sx={{ 
-                        color: theme.palette.primary.main, 
-                        position: 'absolute', 
-                        zIndex: 1,
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)'
-                      }} 
-                    />
-                  )}
-                  {currentStep.imageUrl && (
-                    <Box 
-                      component="img" 
-                      src={getImageSrc(currentStep.imageUrl)} 
-                      alt={currentStep.imageAlt || "Process step image"} 
-                      sx={{
-                        ...imageStyle,
-                        opacity: imageLoaded && !isTransitioning ? 1 : 0,
-                        transition: 'opacity 0.3s ease-in-out'
-                      }}
-                      onLoad={handleImageLoad} 
-                      onError={handleImageError} 
-                    />
-                  )}
+                  <Box 
+                    component="img" 
+                    key={`step-${activeStep}`}
+                    src={getImageSrc(currentStep.imageUrl)} 
+                    alt={currentStep.imageAlt || "Process step image"} 
+                    sx={{
+                      ...imageStyle,
+                      opacity: 1,
+                      transition: 'opacity 0.3s ease-in-out'
+                    }}
+                    onError={(e) => {
+                      // If image fails to load, show a placeholder
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const placeholder = document.createElement('div');
+                      placeholder.style.cssText = `
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(38, 77, 54, 0.1);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #265a36;
+                        font-size: 1.2rem;
+                        border-radius: 12px;
+                      `;
+                      placeholder.textContent = 'Image not available';
+                      target.parentNode?.appendChild(placeholder);
+                    }}
+                  />
                 </Box>
               </Box>
               <Box sx={{ width: { xs: '100%', md: '48%' }, display: 'flex', flexDirection: 'column' }}>
@@ -365,24 +340,25 @@ const ProcessViewer: React.FC<ProcessViewerProps> = ({ steps, title, description
               </Box>
             </Box>
           </Box>
-        </Fade>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 4, flexWrap: 'wrap', gap: 1 }}>
         {steps.map((_, index) => (
           <Box 
             key={index} 
-            onClick={() => !isTransitioning && goToStep(index)} 
+            onClick={() => goToStep(index)} 
+            onMouseEnter={pauseAutoPlay}
+            onMouseLeave={resumeAutoPlay}
             sx={{ 
               width: 12, 
               height: 12, 
               borderRadius: '50%', 
               bgcolor: activeStep === index ? theme.palette.primary.main : theme.palette.customColors.lightGold, 
               mx: 0.5, 
-              cursor: isTransitioning ? 'default' : 'pointer',
-              opacity: isTransitioning ? 0.5 : 1,
+              cursor: 'pointer',
+              opacity: 1,
               transition: 'all 0.3s ease', 
               '&:hover': { 
-                transform: isTransitioning ? 'none' : 'scale(1.2)', 
+                transform: 'scale(1.2)', 
                 bgcolor: activeStep === index ? theme.palette.primary.main : theme.palette.customColors.accentGreen 
               } 
             }} 
@@ -393,218 +369,41 @@ const ProcessViewer: React.FC<ProcessViewerProps> = ({ steps, title, description
         ))}
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}>
-        <Button variant="outlined" onClick={goToPreviousStep} sx={{ color: theme.palette.primary.main, borderColor: theme.palette.primary.main, minWidth: 120, '&:hover': { borderColor: theme.palette.secondary.main, backgroundColor: 'rgba(58, 107, 61, 0.04)' } }}>Previous</Button>
-        <Button variant="contained" onClick={goToNextStep} sx={{ bgcolor: theme.palette.customColors.accentGreen, minWidth: 120, '&:hover': { bgcolor: theme.palette.secondary.main } }}>Next</Button>
+        <Button 
+          variant="outlined" 
+          onClick={goToPreviousStep} 
+          onMouseEnter={pauseAutoPlay}
+          onMouseLeave={resumeAutoPlay}
+          sx={{ 
+            color: theme.palette.primary.main, 
+            borderColor: theme.palette.primary.main, 
+            minWidth: 120, 
+            '&:hover': { 
+              borderColor: theme.palette.secondary.main, 
+              backgroundColor: 'rgba(58, 107, 61, 0.04)' 
+            } 
+          }}
+        >
+          Previous
+        </Button>
+        <Button 
+          variant="contained" 
+          onClick={goToNextStep} 
+          onMouseEnter={pauseAutoPlay}
+          onMouseLeave={resumeAutoPlay}
+          sx={{ 
+            bgcolor: theme.palette.customColors.accentGreen, 
+            minWidth: 120, 
+            '&:hover': { 
+              bgcolor: theme.palette.secondary.main 
+            } 
+          }}
+        >
+          Next
+        </Button>
+
       </Box>
     </Box>
-  );
-};
-
-const NutJourneySEOHead = () => {
-  const pageTitle = "Peanut Journey | From Farm to Table | Balaji Exports";
-  const pageDescription = "Explore the complete journey of peanuts from farm to table. Learn about our organic farming practices, processing methods, and commitment to quality at every step of production.";
-  const pageUrl = "https://balajiexports.com/nut-journey";
-  const imageUrl = "https://balajiexports.com/images/logo.png";
-
-  return (
-    <Head>
-      {/* Primary Meta Tags */}
-      <title>{pageTitle}</title>
-      <meta name="title" content={pageTitle} />
-      <meta name="description" content={pageDescription} />
-      <meta name="keywords" content="peanut journey, groundnut farming, peanut processing, organic peanut farming, peanut production process, peanut harvesting, peanut processing steps, peanut quality control, peanut packaging, peanut storage, peanut farming practices, peanut processing methods, peanut supply chain, peanut export process, peanut manufacturing, peanut industry, peanut agriculture, peanut cultivation, peanut post-harvest, peanut value chain" />
-      <meta name="author" content="Balaji Exports" />
-      <meta name="robots" content="index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
-      <meta name="googlebot" content="index, follow" />
-      <meta name="bingbot" content="index, follow" />
-
-      {/* Canonical URL */}
-      <link rel="canonical" href={pageUrl} />
-
-      {/* Alternate Language Tags */}
-      <link rel="alternate" hrefLang="en" href={pageUrl} />
-      <link rel="alternate" hrefLang="en-US" href={pageUrl} />
-      <link rel="alternate" hrefLang="en-GB" href={pageUrl} />
-      <link rel="alternate" hrefLang="x-default" href={pageUrl} />
-
-      {/* Open Graph / Facebook Meta Tags */}
-      <meta property="og:type" content="article" />
-      <meta property="og:site_name" content="Balaji Exports" />
-      <meta property="og:title" content={pageTitle} />
-      <meta property="og:description" content={pageDescription} />
-      <meta property="og:url" content={pageUrl} />
-      <meta property="og:image" content={imageUrl} />
-      <meta property="og:image:secure_url" content={imageUrl} />
-      <meta property="og:image:type" content="image/png" />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="Peanut Journey - From Farm to Table - Balaji Exports" />
-      <meta property="og:locale" content="en_US" />
-
-      {/* Twitter Card Meta Tags */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@BalajiExports" />
-      <meta name="twitter:creator" content="@BalajiExports" />
-      <meta name="twitter:title" content={pageTitle} />
-      <meta name="twitter:description" content={pageDescription} />
-      <meta name="twitter:image" content={imageUrl} />
-      <meta name="twitter:image:alt" content="Peanut Journey - From Farm to Table - Balaji Exports" />
-
-      {/* Additional Meta Tags */}
-      <meta name="rating" content="general" />
-      <meta name="distribution" content="global" />
-      <meta name="revisit-after" content="7 days" />
-      <meta name="language" content="en" />
-      <meta name="geo.region" content="IN" />
-      <meta name="geo.country" content="India" />
-      <meta name="geo.placename" content="Mumbai" />
-      <meta name="ICBM" content="19.0760, 72.8777" />
-
-      {/* Business/Contact Information */}
-      <meta name="contact" content="info@balajiexports.com" />
-      <meta name="reply-to" content="info@balajiexports.com" />
-      <meta name="owner" content="Balaji Exports" />
-      <meta name="url" content={pageUrl} />
-      <meta name="identifier-URL" content={pageUrl} />
-      <meta name="directory" content="submission" />
-      <meta name="category" content="Agriculture, Food Processing, Manufacturing, Export" />
-      <meta name="coverage" content="Worldwide" />
-      <meta name="target" content="Food Manufacturers, Importers, Distributors, Retailers" />
-
-      {/* Mobile Optimization */}
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
-      <meta name="format-detection" content="telephone=yes" />
-      <meta name="HandheldFriendly" content="true" />
-      <meta name="MobileOptimized" content="width" />
-
-      {/* Security & Privacy */}
-      <meta name="referrer" content="origin-when-cross-origin" />
-      <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-      <meta httpEquiv="X-Frame-Options" content="DENY" />
-
-      {/* Organization Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Balaji Exports",
-            "url": pageUrl,
-            "logo": imageUrl,
-            "description": "Leading exporter of premium quality peanuts and groundnuts from India. Specializing in various peanut varieties for global markets.",
-            "address": {
-              "@type": "PostalAddress",
-              "addressCountry": "IN",
-              "addressRegion": "Maharashtra",
-              "addressLocality": "Mumbai"
-            }
-          })
-        }}
-      />
-
-      {/* Article Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": pageTitle,
-            "description": pageDescription,
-            "image": imageUrl,
-            "author": {
-              "@type": "Organization",
-              "name": "Balaji Exports"
-            },
-            "publisher": {
-              "@type": "Organization",
-              "name": "Balaji Exports",
-              "logo": {
-                "@type": "ImageObject",
-                "url": imageUrl
-              }
-            },
-            "datePublished": "2024-01-01",
-            "dateModified": "2024-03-19",
-            "mainEntityOfPage": {
-              "@type": "WebPage",
-              "@id": pageUrl
-            }
-          })
-        }}
-      />
-
-      {/* Breadcrumb Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://balajiexports.com"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Nut Journey",
-                "item": pageUrl
-              }
-            ]
-          })
-        }}
-      />
-
-      {/* FAQ Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "What are the main steps in peanut farming?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "The main steps in peanut farming include land preparation, organic soil enrichment, seed selection, sowing, irrigation, organic pest management, flowering and pegging, and harvesting. Each step is carefully managed to ensure the highest quality peanuts."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "How are peanuts processed after harvesting?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "After harvesting, peanuts go through several processing steps including reception, cleaning, shelling, grading, blanching, roasting, quality control, packaging, and storage. Each step is crucial for maintaining quality and safety standards."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "What quality control measures are implemented?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Our quality control measures include thorough inspection of raw materials, monitoring of processing parameters, regular testing for contaminants, moisture content analysis, and final product quality checks before packaging and shipping."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "How are peanuts stored and preserved?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Peanuts are stored in controlled environments with optimal temperature and humidity levels. We use airtight packaging and implement strict storage protocols to maintain freshness and prevent contamination or spoilage."
-                }
-              }
-            ]
-          })
-        }}
-      />
-    </Head>
   );
 };
 
@@ -614,17 +413,22 @@ const PeanutJourneyPage = () => {
   const isMobile = windowWidth < 600;
   
   useEffect(() => {
-    const timer = setTimeout(() => { setLoading(false); }, 600);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(() => { 
+      setLoading(false); 
+    }, 600);
+    
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   // Handle hash-based scrolling after page loads
   useEffect(() => {
-    if (!loading) {
+    if (!loading && typeof window !== 'undefined') {
       const hash = window.location.hash;
       if (hash) {
         // Wait a bit for animations to complete
-        setTimeout(() => {
+        const scrollTimer = setTimeout(() => {
           const element = document.querySelector(hash);
           if (element) {
             element.scrollIntoView({ 
@@ -633,6 +437,10 @@ const PeanutJourneyPage = () => {
             });
           }
         }, 1200); // Wait for fade animations to complete (1000ms + buffer)
+        
+        return () => {
+          clearTimeout(scrollTimer);
+        };
       }
     }
   }, [loading]);
@@ -651,7 +459,6 @@ const PeanutJourneyPage = () => {
   }
   return (
     <ThemeProvider theme={theme}>
-      <NutJourneySEOHead />
       <Box component="main" sx={{ backgroundColor: theme.palette.background.default, minHeight: '100vh', pt: 6, pb: 8, '& .MuiTypography-root': { fontFamily: 'Lato, sans-serif' }, '& .journey-content': { '& .MuiTypography-body1, & .MuiTypography-body2': { fontFamily: 'Inter, sans-serif' } } }}>
         <Container maxWidth="lg" className="journey-content">
           <Fade in={true} timeout={1000}>
@@ -705,10 +512,10 @@ const PeanutJourneyPage = () => {
                 position: 'absolute',
                 top: 0,
                 left: 0,
-                width: '100%',
-                height: '6px',
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.customColors.accentGreen})`,
-                opacity: 0.8,
+                right: 0,
+                bottom: 0,
+                background: 'linear-gradient(135deg, rgba(46, 125, 50, 0.1) 0%, rgba(76, 175, 80, 0.1) 100%)',
+                zIndex: -1,
               }
             }}
           >

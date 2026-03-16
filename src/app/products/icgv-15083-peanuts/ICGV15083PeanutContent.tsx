@@ -15,6 +15,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
 import CertificationsCarousel from '@/components/CertificationsCarousel';
+import KeyFeaturesCarousel from '@/components/KeyFeaturesCarousel';
 
 // Import product image
 import icgv15083ProductImage from '@/assets/images/productImg/ICGV15083Product.webp';
@@ -65,7 +66,7 @@ const ICGV15083PeanutPage = () => {
             >
               <Image
                 src={icgv15083ProductImage}
-                alt="ICGV-15084/ Girnar 4 Premium High Oleic Peanuts"
+                alt="ICGV-15083 Premium High Oleic Peanuts"
                 fill
                 style={{ 
                   objectFit: 'cover',
@@ -81,11 +82,11 @@ const ICGV15083PeanutPage = () => {
               Healthier, Longer-Lasting Peanuts for Oil & Snack Applications
             </Typography>
             <Typography variant="body1" sx={{ my: 3, fontFamily: 'Inter, sans-serif', color: theme.palette.secondary.main, fontSize: { xs: '0.95rem', md: '1rem' }, lineHeight: 1.8 }}>
-              <span style={{ fontWeight: 700 }}>ICGV-15084/ Girnar 4 are premium high oleic peanuts </span>
+              <span style={{ fontWeight: 700 }}>ICGV-15083 are premium high oleic peanuts </span>
               varieties developed in India to meet the growing demand for healthier, long-lasting peanuts. These varieties are known for their high oleic acid content (over 78%), which offers improved oxidative stability, longer shelf life, and enhanced heart-health benefits.
             </Typography>
             <Typography variant="body1" sx={{ mb: 3, fontFamily: 'Inter, sans-serif', color: theme.palette.secondary.main, fontSize: { xs: '0.95rem', md: '1rem' }, lineHeight: 1.8 }}>
-              Widely used in premium peanut oil production, health foods, and international snack markets, ICGV-15084/ Girnar 4 are ideal for customers looking for high-quality, non-GMO, aflatoxin-controlled peanuts for both consumption and processing.
+              Widely used in premium peanut oil production, health foods, and international snack markets, ICGV-15083 are ideal for customers looking for high-quality, non-GMO, aflatoxin-controlled peanuts for both consumption and processing.
             </Typography>
             <Box sx={{ mb: 3, maxWidth: '500px' }}>
               <CertificationsCarousel height="60px" showDots={false} />
@@ -93,7 +94,7 @@ const ICGV15083PeanutPage = () => {
           </Grid>
         </Grid>
         <Typography variant="body1" sx={{ my: 4, fontFamily: 'Inter, sans-serif', color: theme.palette.secondary.main, fontSize: { xs: '0.95rem', md: '1rem' }, lineHeight: 1.8, textAlign: { xs: 'left', md: 'center' }, maxWidth: '900px', mx: 'auto' }}>
-          At Balaji Exports, we specialize in supplying ICGV-15084/ Girnar 4 high oleic peanuts that meet international food safety standards and offer superior performance in food processing and retail markets.
+          At Balaji Exports, we specialize in supplying ICGV-15083 high oleic peanuts that meet international food safety standards and offer superior performance in food processing and retail markets.
         </Typography>
       </Container>
 
@@ -110,7 +111,7 @@ const ICGV15083PeanutPage = () => {
             Applications
           </Typography>
           <Typography variant="body1" sx={{ mt: 5, mb: 4, fontFamily: 'Inter, sans-serif', fontSize: { xs: '1rem', md: '1.1rem' }, color: theme.palette.customColors.lightGold, textAlign: 'center', maxWidth: '850px', mx: 'auto', lineHeight: 1.8 }}>
-            ICGV-15084/ Girnar 4 peanuts are highly versatile with exceptional nutritional properties and consistent quality, making them suitable for various industrial and commercial applications. Our premium peanuts are specifically cultivated to meet the demanding requirements of the following industries:
+            ICGV-15083 peanuts are highly versatile with exceptional nutritional properties and consistent quality, making them suitable for various industrial and commercial applications. Our premium peanuts are specifically cultivated to meet the demanding requirements of the following industries:
           </Typography>
           <Box sx={{ maxWidth: '800px', mx: 'auto', mt: 4, px: 3 }}>
             {[
@@ -141,7 +142,7 @@ const ICGV15083PeanutPage = () => {
             ))}
           </Box>
           <Typography variant="body1" sx={{ mt: 4, fontFamily: 'Inter, sans-serif', fontSize: { xs: '1rem', md: '1.05rem' }, color: theme.palette.customColors.lightGold, textAlign: 'center', maxWidth: '850px', mx: 'auto', fontStyle: 'italic', p: 2, borderRadius: 2, background: 'rgba(255,255,255,0.07)' }}>
-            Our ICGV-15084/ Girnar 4 peanuts' consistent quality ensures reliable performance across all these applications, making them a preferred choice for businesses requiring premium ingredients.
+            Our ICGV-15083 peanuts' consistent quality ensures reliable performance across all these applications, making them a preferred choice for businesses requiring premium ingredients.
           </Typography>
         </Container>
       </Box>
@@ -188,10 +189,10 @@ const ICGV15083PeanutPage = () => {
         <Grid container spacing={4}>
           <Grid item xs={12} md={8} sx={{ mx: 'auto' }}>
             <Typography variant="h3" component="h2" sx={{ fontFamily: 'Lato, sans-serif', fontWeight: 700, color: theme.palette.primary.main, mb: 4, textAlign: { xs: 'left', md: 'center' }, fontSize: { xs: '1.6rem', sm: '1.8rem', md: '2rem' } }}>
-              Why Choose Our ICGV-15084/ Girnar 4 Peanuts?
+              Why Choose Our ICGV-15083 Peanuts?
             </Typography>
             <Typography variant="body1" component="p" sx={{ mb: 3, fontFamily: 'Inter, sans-serif', color: theme.palette.secondary.main, lineHeight: 1.8, fontSize: { xs: '0.95rem', md: '1rem' }, position: 'relative', pl: 3, '&:before': { content: '""', position: 'absolute', left: 0, top: '8px', width: '8px', height: '8px', borderRadius: '50%', backgroundColor: theme.palette.primary.main } }}>
-              Food industries requiring consistent size and flavor for premium products and international applications choose our ICGV-15084/ Girnar 4 peanuts for reliable quality.
+              Food industries requiring consistent size and flavor for premium products and international applications choose our ICGV-15083 peanuts for reliable quality.
             </Typography>
             <Typography variant="body1" component="p" sx={{ mb: 3, fontFamily: 'Inter, sans-serif', color: theme.palette.secondary.main, lineHeight: 1.8, fontSize: { xs: '0.95rem', md: '1rem' }, position: 'relative', pl: 3, '&:before': { content: '""', position: 'absolute', left: 0, top: '8px', width: '8px', height: '8px', borderRadius: '50%', backgroundColor: theme.palette.primary.main } }}>
               As leading wholesale peanuts suppliers in India, we offer competitive groundnut prices per ton for large-scale buyers looking to buy groundnuts in bulk. We specialize in supplying to peanut importers worldwide, groundnut companies in Andhra Pradesh, and peanut exporters from India to UAE, Europe, and beyond.
@@ -200,7 +201,7 @@ const ICGV15083PeanutPage = () => {
               Our focus is always on delivering best quality groundnuts from India with strict attention to hygienic packaging and lab-tested groundnuts that are safe, healthy, and fresh. Whether you need edible peanuts for food industries or bulk groundnuts for snack manufacturing, Balaji Exports is your most reliable partner in the peanut export business.
             </Typography>
             <Typography variant="body1" component="p" sx={{ fontFamily: 'Inter, sans-serif', color: theme.palette.secondary.main, lineHeight: 1.8, fontSize: { xs: '0.95rem', md: '1rem' }, position: 'relative', pl: 3, '&:before': { content: '""', position: 'absolute', left: 0, top: '8px', width: '8px', height: '8px', borderRadius: '50%', backgroundColor: theme.palette.primary.main } }}>
-              Partner with Balaji Exports, the top peanut export company in India, and source the highest quality ICGV-15084/ Girnar 4 peanuts for your global needs. Trust our experience, quality, and commitment to deliver the best from India's fertile fields to your business.
+              Partner with Balaji Exports, the top peanut export company in India, and source the highest quality ICGV-15083 peanuts for your global needs. Trust our experience, quality, and commitment to deliver the best from India's fertile fields to your business.
             </Typography>
             <Box sx={{ textAlign: 'center', mt: 6 }}>
               <Button variant="contained" component={Link} href="/contact" size="large" aria-label="Request a quotation for Runner Peanuts" sx={{ bgcolor: theme.palette.primary.main, fontFamily: 'Inter, sans-serif', px: { xs: 4, md: 5 }, py: { xs: 1, md: 1.5 }, fontSize: { xs: 15, md: 16 }, fontWeight: 600, boxShadow: '0 4px 14px rgba(0,0,0,0.2)', borderRadius: '6px', transition: 'all 0.3s ease', '&:hover': { bgcolor: theme.palette.secondary.main, transform: 'translateY(-3px)', boxShadow: '0 6px 20px rgba(0,0,0,0.3)' } }}>
@@ -221,7 +222,7 @@ const ICGV15083PeanutPage = () => {
         <nav aria-label="breadcrumb">
           <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'Inter, sans-serif', display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             <Link href="/" style={{ color: 'inherit', textDecoration: 'none' }}>Home</Link> {'>'}
-            <span style={{ color: theme.palette.primary.main }}>ICGV-15084/ Girnar 4 Peanuts</span>
+            <span style={{ color: theme.palette.primary.main }}>ICGV-15083 Peanuts</span>
           </Typography>
         </nav>
       </Container>
@@ -251,6 +252,7 @@ const ProductSpecifications = () => {
         { name: 'Varieties Available', value: '38/42, 40/50 counts (kernels per ounce)' }
       ]
     },
+
     packaging: {
       title: "Packaging & Storage",
       icon: <LocalShippingIcon sx={{ fontSize: 20 }} />,
@@ -305,53 +307,6 @@ const ProductSpecifications = () => {
         ))}
       </Box>
       <Box sx={{ mt: 10, display: 'flex', justifyContent: 'center' }}></Box>
-    </Box>
-  );
-};
-
-const KeyFeaturesCarousel = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const images = [
-    { src: keyFeatureImg1, alt: 'Key Feature Image 1' },
-    { src: keyFeatureImg2, alt: 'Key Feature Image 2' },
-    { src: keyFeatureImg3, alt: 'Key Feature Image 3' },
-    { src: keyFeatureImg4, alt: 'Key Feature Image 4' },
-    { src: keyFeatureImg5, alt: 'Key Feature Image 5' }
-  ];
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => prevIndex === images.length - 1 ? 0 : prevIndex + 1);
-      setImageLoaded(false);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [images.length]);
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) => prevIndex === 0 ? images.length - 1 : prevIndex - 1);
-    setImageLoaded(false);
-  };
-  const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => prevIndex === images.length - 1 ? 0 : prevIndex + 1);
-    setImageLoaded(false);
-  };
-  return (
-    <Box sx={{ position: 'relative', width: '100%', height: '100%', borderRadius: 3, overflow: 'hidden', boxShadow: '0px 10px 20px rgba(0,0,0,0.1)' }}>
-      <IconButton onClick={handlePrevImage} sx={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', zIndex: 2, bgcolor: 'rgba(255, 255, 255, 0.8)', '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' }, boxShadow: 2 }}>
-        <ChevronLeft />
-      </IconButton>
-      <IconButton onClick={handleNextImage} sx={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', zIndex: 2, bgcolor: 'rgba(255, 255, 255, 0.8)', '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' }, boxShadow: 2 }}>
-        <ChevronRight />
-      </IconButton>
-      <Fade in={true} timeout={500}>
-        <Box sx={{ width: '100%', height: '100%', position: 'relative' }}>
-          <Image src={images[currentImageIndex].src} alt={images[currentImageIndex].alt} fill style={{ objectFit: 'cover', opacity: imageLoaded ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }} onLoad={() => setImageLoaded(true)} />
-        </Box>
-      </Fade>
-      <Box sx={{ position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 1, zIndex: 2 }}>
-        {images.map((_, index) => (
-          <Box key={index} onClick={() => setCurrentImageIndex(index)} sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: currentImageIndex === index ? 'white' : 'rgba(255,255,255,0.5)', cursor: 'pointer', transition: 'all 0.3s ease', '&:hover': { transform: 'scale(1.2)' } }} />
-        ))}
-      </Box>
     </Box>
   );
 };

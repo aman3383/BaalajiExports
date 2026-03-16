@@ -1,4 +1,5 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { Box, Divider } from '@mui/material';
 import Banner from '@/components/Banner';
 import ProductsListing from '@/components/ProductsListing';
@@ -6,13 +7,31 @@ import OurJourney from '@/components/OurJourney';
 import IndustrialSolutions from '@/components/IndustrialSolutions';
 import GradientCard from '@/components/GradientCard';
 import WhyChooseUs from '@/components/WhyChooseUs';
+import MeetOurPioneers from '@/components/MeetOurPioneers';
+import { getPageSEO, getPageScriptTags } from '@/lib/utils/seo';
+import JsonLdScripts from '@/components/JsonLdScripts';
 
+// Make the page dynamic to fetch fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
-
-export default function Home() {
+export async function generateMetadata(): Promise<Metadata> {
+  const seoData = await getPageSEO('home');
   
+  if (seoData) {
+    return seoData;
+  }
+
+  // Return empty metadata if not found in database
+  return {};
+}
+
+export default async function Home() {
+  const scriptTags = await getPageScriptTags('home');
+
   return (
     <main>
+      <JsonLdScripts scriptTags={scriptTags} />
       <Banner />
       <Box sx={{ backgroundColor: '#F2E8C9' }}>
         <ProductsListing />
@@ -77,6 +96,15 @@ export default function Home() {
           opacity: 0.18
         }} />
         <WhyChooseUs />
+        <Divider sx={{ 
+          my: 2, 
+          width: '80%',
+          maxWidth: '1000px',
+          mx: 'auto',
+          borderColor: 'primary.main',
+          opacity: 0.18
+        }} />
+        <MeetOurPioneers />
       </Box>
     </main>
   );

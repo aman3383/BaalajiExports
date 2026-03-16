@@ -25,6 +25,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
+
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 import BlockIcon from "@mui/icons-material/Block";
@@ -150,8 +151,6 @@ const CompactListItem = ({ icon, primary, secondary }: CompactListItemProps) => 
   </ListItem>
 );
 
-
-
 const HealthBenefitsPage = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [tabValue, setTabValue] = React.useState(0);
@@ -169,6 +168,7 @@ const HealthBenefitsPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
+
       <Box sx={{ ...pageBackground, minHeight: "100vh", pb: 8 }}>
         <Container maxWidth="lg">
           <Fade in={true}>

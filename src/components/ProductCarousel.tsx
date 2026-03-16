@@ -78,13 +78,13 @@ const products = [
     image: redSkinHomeImage
   },
   {
-    name: 'ICGV 15084/ Girnar 4 Peanuts',
+    name: 'ICGV-15083 / girnar-4 Peanuts',
     path: '/products/icgv-15083-peanuts',
     description: 'Improved varieties with enhanced disease resistance and higher yields.',
     image: icgv15083HomeImage
   },
   {
-    name: 'ICGV 15090/ Girnar 5 Peanuts',
+    name: 'ICGV-15090 / girnar-5 Peanuts',
     path: '/products/icgv15090-peanuts',
     description: 'Research-backed variety with improved nutritional profile and yield potential.',
     image: icgv15090HomeImage
@@ -116,7 +116,7 @@ const products = [
   {
     name: 'Organic Peanuts',
     path: '/products/organic-peanuts',
-    description: 'Certified organic peanuts grown without synthetic pesticides or fertilizers.',
+    description: 'Organically grown peanuts with distinctive shape and rich nutty flavor profile.',
     image: longJavaPeanutsImage
   },
   {

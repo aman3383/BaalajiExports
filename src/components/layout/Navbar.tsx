@@ -70,28 +70,32 @@ const Navbar = () => {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    if (typeof document !== 'undefined') {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
   }, []);
 
   // Close dropdown on scroll
   useEffect(() => {
-    const handleScroll = () => {
-      if (isTranslateMenuOpen) {
-        setIsTranslateMenuOpen(false);
-        setTranslateMenuAnchor(null);
-      }
-      if (isProductsMenuOpen) {
-        setIsProductsMenuOpen(false);
-      }
-    };
+    if (typeof window !== 'undefined') {
+      const handleScroll = () => {
+        if (isTranslateMenuOpen) {
+          setIsTranslateMenuOpen(false);
+          setTranslateMenuAnchor(null);
+        }
+        if (isProductsMenuOpen) {
+          setIsProductsMenuOpen(false);
+        }
+      };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
   }, [isTranslateMenuOpen, isProductsMenuOpen]);
 
   // Product items
@@ -117,6 +121,7 @@ const Navbar = () => {
   // Add blog items
   const blogItems = [
     { name: 'Vietnam Market', path: '/blogs/vietnam' },
+    { name: 'Bangladesh Market', path: '/blogs/bangladesh' },
   ];
 
   // Navigation items
@@ -762,4 +767,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar; 

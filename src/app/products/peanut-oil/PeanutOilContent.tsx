@@ -8,7 +8,8 @@ import Link from 'next/link';
 import Fade from '@mui/material/Fade';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import ProductCarousel from '@/components/ProductCarousel';
-import Head from 'next/head';
+import KeyFeaturesCarousel from '@/components/KeyFeaturesCarousel';
+
 
 // Import icons
 import CheckIcon from '@mui/icons-material/Check';
@@ -37,14 +38,7 @@ import keyFeatureImg3 from "@/assets/images/productImg/key_features/Gemini_Gener
 import keyFeatureImg4 from "@/assets/images/productImg/key_features/Gemini_Generated_Image_cpb11wcpb11wcpb1.webp";
 import keyFeatureImg5 from "@/assets/images/productImg/key_features/top-view-peanuts-green-background.webp";
 
-const PeanutOilSEOHead = () => {
-  const pageTitle = "Premium Peanut Oil | High-Quality Cooking Oil | Balaji Exports";
-  const pageDescription = "Premium peanut oil from leading Indian exporters. High smoke point (450°F), heart-healthy, neutral flavor. Perfect for cooking, frying, cosmetics & industrial use. FSSAI certified, competitive wholesale prices.";
-  const pageUrl = "https://www.balajiexports.com/products/peanut-oil";
-  const imageUrl = "https://www.balajiexports.com/assets/images/productImg/Oil.webp";
 
-  
-};
 
 // Product Specifications Component
 const ProductSpecifications: React.FC = () => {
@@ -232,160 +226,6 @@ const ProductSpecifications: React.FC = () => {
               ))}
             </Box>
           </Paper>
-        ))}
-      </Box>
-    </Box>
-  );
-};
-
-// Key Features Carousel Component
-const KeyFeaturesCarousel: React.FC = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const images = [
-    { src: keyFeatureImg1, alt: "Premium Quality Peanut Oil" },
-    { src: keyFeatureImg2, alt: "Natural and Pure Ingredients" },
-    { src: keyFeatureImg3, alt: "Health Benefits" },
-    { src: keyFeatureImg4, alt: "Versatile Applications" },
-    { src: keyFeatureImg5, alt: "Sustainable Production" },
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isHovered) {
-        setCurrentImageIndex((prevIndex) => 
-          prevIndex === images.length - 1 ? 0 : prevIndex + 1
-        );
-        setImageLoaded(false);
-      }
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [images.length, isHovered]);
-
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) => 
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-    setImageLoaded(false);
-  };
-
-  const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => 
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
-    setImageLoaded(false);
-  };
-
-  return (
-    <Box 
-      sx={{ 
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-        borderRadius: 3,
-        overflow: 'hidden',
-        boxShadow: '0px 10px 20px rgba(0,0,0,0.1)',
-        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-        '&:hover': {
-          transform: 'translateY(-5px)',
-          boxShadow: '0px 15px 30px rgba(0,0,0,0.2)',
-        }
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <IconButton
-        onClick={handlePrevImage}
-        sx={{
-          position: 'absolute',
-          left: 10,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          zIndex: 2,
-          bgcolor: 'rgba(255, 255, 255, 0.8)',
-          '&:hover': { 
-            bgcolor: 'rgba(255, 255, 255, 0.9)',
-            transform: 'translateY(-50%) scale(1.1)',
-          },
-          boxShadow: 2,
-          transition: 'all 0.3s ease',
-        }}
-      >
-        <ChevronLeft />
-      </IconButton>
-
-      <IconButton
-        onClick={handleNextImage}
-        sx={{
-          position: 'absolute',
-          right: 10,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          zIndex: 2,
-          bgcolor: 'rgba(255, 255, 255, 0.8)',
-          '&:hover': { 
-            bgcolor: 'rgba(255, 255, 255, 0.9)',
-            transform: 'translateY(-50%) scale(1.1)',
-          },
-          boxShadow: 2,
-          transition: 'all 0.3s ease',
-        }}
-      >
-        <ChevronRight />
-      </IconButton>
-
-      <Fade in={true} timeout={800}>
-        <Box sx={{ position: 'relative', width: '100%', height: '100%', minHeight: '400px' }}>
-          <Image
-            src={images[currentImageIndex].src}
-            alt={images[currentImageIndex].alt}
-            onLoad={() => setImageLoaded(true)}
-            fill
-            style={{
-              objectFit: 'cover',
-              opacity: imageLoaded ? 1 : 0,
-              transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out',
-              transform: imageLoaded ? 'scale(1)' : 'scale(1.05)',
-            }}
-            priority
-          />
-        </Box>
-      </Fade>
-
-      <Box sx={{
-        position: 'absolute',
-        bottom: 10,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        display: 'flex',
-        gap: 1,
-        zIndex: 2,
-        bgcolor: 'rgba(0,0,0,0.3)',
-        px: 2,
-        py: 1,
-        borderRadius: 2,
-        backdropFilter: 'blur(4px)',
-      }}>
-        {images.map((_, index) => (
-          <Box
-            key={index}
-            onClick={() => setCurrentImageIndex(index)}
-            sx={{
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
-              bgcolor: currentImageIndex === index ? 'white' : 'rgba(255,255,255,0.5)',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                transform: 'scale(1.2)',
-                bgcolor: currentImageIndex === index ? 'white' : 'rgba(255,255,255,0.8)',
-              }
-            }}
-          />
         ))}
       </Box>
     </Box>

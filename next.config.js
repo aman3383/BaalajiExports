@@ -1,12 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // trailingSlash: true,
+  // Remove output to enable true SSR (not standalone static)
+  // output: 'standalone', // Commented out to enable SSR
   
-
+  // Enable trailing slash for better SEO
+  trailingSlash: true,
   
-  // Image optimization for static export
+  // Generate static sitemap
+  generateBuildId: async () => {
+    return 'build-' + Date.now()
+  },
+  
+  // Image optimization (enabled for SSR)
   images: {
-    unoptimized: true,
     domains: ['www.balajiexports.com', 'balajiexports.com'],
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

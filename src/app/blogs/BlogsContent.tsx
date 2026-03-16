@@ -1,140 +1,32 @@
-'use client';
-
 import React from 'react';
 import { Container, Typography, Box, Card, CardContent, Button } from '@mui/material';
 import Link from 'next/link';
 import { ArrowForward } from '@mui/icons-material';
 
-const blogCards = [
-  {
-    title: 'Netherlands Market',
-    subtitle: 'India-Netherlands Agriculture Trade',
-    overline: 'EUROPEAN GATEWAY',
-    description: 'Explore the growing agricultural partnership between India and the Netherlands, with a special focus on peanut exports and the Dutch gateway to European markets.',
-    to: '/blogs/netherlands',
-    readTime: '5 min read',
-    feature: 'Netherlands Market',
-  },
-  {
-    title: 'USA Market',
-    subtitle: 'India–USA Agriculture Trade',
-    overline: 'NORTH AMERICA',
-    description: 'Explore the flourishing agricultural partnership between India and the USA, with a special focus on rising peanut exports and the growing demand for Indian varieties in the American market.',
-    to: '/blogs/usa',
-    readTime: '5 min read',
-    feature: 'USA Market',
-  },
-  {
-    title: 'South Africa Market',
-    subtitle: 'India-South Africa Agricultural Trade',
-    overline: 'AFRICAN TRADE',
-    description: 'Explore the booming agricultural trade between India and South Africa, with a special focus on growing peanut exports and the varieties most popular in the Southern African market.',
-    to: '/blogs/south-africa',
-    readTime: '5 min read',
-    feature: 'South Africa Market',
-  },
-  {
-    title: 'UK Market',
-    subtitle: 'India-UK Free Trade Agreement',
-    overline: 'TRADE AGREEMENT',
-    description: 'Explore how the 2025 Free Trade Agreement is transforming India-UK agricultural trade, with a special focus on growing peanut exports and new market opportunities.',
-    to: '/blogs/uk',
-    readTime: '5 min read',
-    feature: 'UK Market',
-  },
-  {
-    title: 'Germany Market',
-    subtitle: 'India-Germany Agricultural Trade',
-    overline: 'EUROPEAN INSIGHTS',
-    description: 'Explore the growing agricultural partnership between India and Germany, with a focus on peanut exports, sustainable sourcing, and the opportunities in Europe\'s largest economy.',
-    to: '/blogs/germany',
-    readTime: '5 min read',
-    feature: 'Germany Market',
-  },
-  {
-    title: 'Vietnam Market',
-    subtitle: 'Vietnam Market',
-    overline: 'MARKET INSIGHTS',
-    description: 'Explore the dynamic peanut market in Vietnam, including market trends, opportunities, and key insights for businesses looking to expand in the region.',
-    to: '/blogs/vietnam',
-    readTime: '5 min read',
-    feature: 'Vietnam Market',
-  },
-  {
-    title: 'Indonesia Trade',
-    subtitle: 'India-Indonesia Agricultural Trade',
-    overline: 'TRADE INSIGHTS',
-    description: 'Discover the growing agricultural trade relationship between India and Indonesia, with a special focus on peanut exports, market trends and business opportunities.',
-    to: '/blogs/indonesia',
-    readTime: '6 min read',
-    feature: 'Indonesia Trade',
-  },
-  {
-    title: 'Thailand Partnership',
-    subtitle: 'India-Thailand Agricultural Trade',
-    overline: 'TRADE INSIGHTS',
-    description: 'Explore the growing agricultural partnership between India and Thailand, with a focus on peanut varieties, trade statistics, and export opportunities in Thailand\'s food processing sector.',
-    to: '/blogs/thailand',
-    readTime: '5 min read',
-    feature: 'Thailand Partnership',
-  },
-  {
-    title: 'Philippines Market',
-    subtitle: 'India-Philippines Agricultural Trade',
-    overline: 'MARKET INSIGHTS',
-    description: 'Explore the growing agricultural trade between India and the Philippines, with a special focus on peanut varieties, export opportunities, and market trends in this expanding Southeast Asian market.',
-    to: '/blogs/philippines',
-    readTime: '5 min read',
-    feature: 'Philippines Market',
-  },
-  {
-    title: 'Singapore Trade',
-    subtitle: 'India-Singapore Agricultural Trade',
-    overline: 'TRADE INSIGHTS',
-    description: 'Explore the strategic agricultural trade relationship between India and Singapore, with a focus on peanut exports, varieties, and Singapore\'s role as a gateway to Southeast Asian markets.',
-    to: '/blogs/singapore',
-    readTime: '5 min read',
-    feature: 'Singapore Trade',
-  },
-  {
-    title: 'China Market',
-    subtitle: 'India-China Agricultural Trade',
-    overline: 'MARKET INSIGHTS',
-    description: 'Explore the growing agricultural trade between India and China, with a special focus on peanut exports, varieties, and the significant opportunities in the world\'s largest market.',
-    to: '/blogs/china',
-    readTime: '5 min read',
-    feature: 'China Market',
-  },
-  {
-    title: 'Russia Market',
-    subtitle: 'India-Russia Agricultural Trade',
-    overline: 'TRADE INSIGHTS',
-    description: 'Explore the growing agricultural trade between India and Russia, with a special focus on peanut exports and the significant opportunities in this strategic market.',
-    to: '/blogs/russia',
-    readTime: '5 min read',
-    feature: 'Russia Market',
-  },
-  {
-    title: 'Bangladesh Market',
-    subtitle: 'India-Bangladesh Agricultural Trade',
-    overline: 'TRADE INSIGHTS',
-    description: 'Explore the growing agricultural trade between India and Bangladesh, with a special focus on peanut exports and the strong bilateral partnership between these neighboring countries.',
-    to: '/blogs/bangladesh',
-    readTime: '5 min read',
-    feature: 'Bangladesh Market',
-  },
-  {
-    title: 'Turkey Market',
-    subtitle: 'India-Turkey Agricultural Trade',
-    overline: 'TRADE INSIGHTS',
-    description: 'Understanding the growing peanut import market in Turkey and the flourishing agricultural trade partnership between India and Turkey.',
-    to: '/blogs/turkey',
-    readTime: '6 min read',
-    feature: 'Turkey Market',
-  },
-];
+// Transform database blog to card format
+function transformBlogToCard(blog: any) {
+  // Extract content preview (remove HTML tags)
+  const extractContentPreview = (content: string, wordLimit: number = 25) => {
+    const plainText = content.replace(/<[^>]*>/g, '');
+    const words = plainText.split(' ');
+    return words.length > wordLimit 
+      ? words.slice(0, wordLimit).join(' ') + '...'
+      : plainText;
+  };
 
-export default function BlogsContent() {
+  return {
+    title: blog.slug + ' Market' || 'New Market Analysis',
+    subtitle: 'India-' + blog.slug + ' Agricultural Trade',
+    overline: 'Trade Insights',
+    description: extractContentPreview(blog.content, 25) || (blog.seo?.description ?? ''),
+    to: `/blogs/${blog.slug}`,
+    readTime: blog.readTime || '5 min read',
+    feature: blog.slug.charAt(0).toUpperCase() + blog.slug.slice(1) + ' Market',  };
+}
+
+export default function BlogsContent({ blogs }: { blogs: any[] }) {
+  const allBlogCards = blogs.map(transformBlogToCard);
+
   return (
     <main>
       <Box
@@ -192,9 +84,10 @@ export default function BlogsContent() {
               Discover the latest insights, trends, and stories from the world of peanuts
             </Typography>
           </Box>
+
           {/* Blog Cards Section */}
           <Box sx={{ mt: 6, display: 'flex', flexDirection: 'column', gap: 5 }}>
-            {blogCards.map((card, idx) => (
+            {allBlogCards.map((card, idx) => (
               <Link
                 key={card.to}
                 href={card.to}
@@ -294,6 +187,7 @@ export default function BlogsContent() {
                           fontWeight: 700,
                           textAlign: 'center',
                           position: 'relative',
+                          fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
                           '&::after': {
                             content: '""',
                             position: 'absolute',
@@ -377,53 +271,61 @@ export default function BlogsContent() {
                           mb: 3,
                           fontSize: { xs: '0.9rem', sm: '1rem' },
                           lineHeight: 1.8,
-                          position: 'relative',
-                          pl: 3,
-                          borderLeft: '2px solid customColors.accentGreen',
-                          opacity: 0.9
+                          display: '-webkit-box',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
                         }}
                       >
                         {card.description}
                       </Typography>
                     </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        mt: 3
-                      }}
-                    >
-                      <Button
-                        className="read-more-btn"
-                        endIcon={<ArrowForward />}
-                        sx={{
-                          backgroundColor: 'transparent',
-                          color: 'customColors.accentGreen',
-                          border: '2px solid customColors.accentGreen',
-                          borderRadius: '30px',
-                          padding: '8px 24px',
-                          fontWeight: 600,
-                          transition: 'all 0.3s ease',
-                          '&:hover': {
-                            backgroundColor: 'customColors.accentGreen',
-                            color: 'white',
-                            transform: 'translateX(4px)'
-                          }
-                        }}
-                      >
-                        Read More
-                      </Button>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
                       <Typography
-                        variant="caption"
+                        variant="body2"
                         sx={{
-                          color: 'secondary.main',
-                          opacity: 0.7,
-                          fontStyle: 'italic'
+                          color: 'text.secondary',
+                          fontFamily: 'Inter, sans-serif',
+                          fontWeight: 500
                         }}
                       >
                         {card.readTime}
                       </Typography>
+                      <Button
+                        className="read-more-btn"
+                        sx={{
+                          color: 'primary.main',
+                          fontWeight: 600,
+                          fontSize: '0.875rem',
+                          textTransform: 'none',
+                          borderRadius: '20px',
+                          px: 3,
+                          py: 1,
+                          backgroundColor: 'transparent',
+                          border: '1px solid',
+                          borderColor: 'primary.main',
+                          transition: 'all 0.3s ease',
+                          position: 'relative',
+                          overflow: 'hidden',
+                          '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            top: 0,
+                            left: '-100%',
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'customColors.accentGreen',
+                            transition: 'left 0.3s ease',
+                            zIndex: -1
+                          },
+                          '&:hover::before': {
+                            left: 0
+                          }
+                        }}
+                        endIcon={<ArrowForward />}
+                      >
+                        Read More
+                      </Button>
                     </Box>
                   </CardContent>
                 </Card>

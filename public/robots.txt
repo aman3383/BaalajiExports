@@ -1,3 +1,9 @@
+# https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
-Sitemap: https://www.baalajiexports.com/sitemap.xml 
+
+# Sitemap location
+Sitemap: https://www.baalajiexports.com/sitemap.xml
+
+# Allow all crawlers to access all content
+# No disallow rules as we want all pages to be crawled 

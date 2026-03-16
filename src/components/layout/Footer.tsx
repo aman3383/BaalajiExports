@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Box, 
   Container, 
@@ -18,7 +18,6 @@ import {
 } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -52,6 +51,11 @@ const MarketLink = styled('div')(({ theme }) => ({
   }
 }));
 
+type Blog = {
+  slug: string;
+  title?: string;
+};
+
 const Footer = () => {
   const theme = useTheme();
   const router = useRouter();
@@ -59,6 +63,28 @@ const Footer = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const isMediumScreen = useMediaQuery(theme.breakpoints.between('md', 'lg'));
   const [productDropdownOpen, setProductDropdownOpen] = useState(false);
+  const [marketLinks, setMarketLinks] = useState<{ name: string; path: string }[]>([]);
+
+  useEffect(() => {
+    async function fetchBlogs() {
+      try {
+        const res = await fetch('/api/blogs');
+        if (!res.ok) return;
+        const blogs: Blog[] = await res.json();
+        // Use title, fallback to capitalized slug
+        const toTitleCase = (s: string) =>
+          s.split(/[\s-]+/).map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+        const links = blogs.map((blog) => ({
+          name: toTitleCase(blog.slug) + ' Market',
+          path: `/blogs/${blog.slug}`
+        }));
+        setMarketLinks(links);
+      } catch (e) {
+        // Optionally handle error
+      }
+    }
+    fetchBlogs();
+  }, []);
 
   const peanutProducts = [
     { name: 'Bold/Runner Peanuts', path: '/products/bold-peanuts' },
@@ -68,8 +94,8 @@ const Footer = () => {
     { name: 'Virginia Peanuts', path: '/products/virginia-peanuts' },
     { name: 'Blanched Peanuts', path: '/products/blanched-peanuts' },
     { name: 'Red Skin Peanuts', path: '/products/red-skin-peanuts' },
-            { name: 'ICGV 15084/ Girnar 4 Peanuts', path: '/products/icgv-15083-peanuts' },
-            { name: 'ICGV 15090/ Girnar 5 Peanuts', path: '/products/icgv15090-peanuts' },
+    { name: 'ICGV-15083 / girnar-4 Peanuts', path: '/products/icgv-15083-peanuts' },
+    { name: 'ICGV-15090 / girnar-5 Peanuts', path: '/products/icgv15090-peanuts' },
     { name: 'ICGV 03043 Peanuts', path: '/products/icgv-03043-peanuts' },
     { name: 'G20 Peanuts', path: '/products/g20-peanuts' },
     { name: 'K6 Peanuts', path: '/products/k6-peanuts' },
@@ -157,16 +183,19 @@ const Footer = () => {
                 justifyContent={{ xs: 'center', sm: 'flex-start' }}
               >
                 {[
-                  { icon: <InstagramIcon fontSize={isXsScreen ? "small" : "medium"} />, label: "Instagram" },
-                  { icon: <FacebookIcon fontSize={isXsScreen ? "small" : "medium"} />, label: "Facebook" },
-                  { icon: <TwitterIcon fontSize={isXsScreen ? "small" : "medium"} />, label: "Twitter" },
-                  { icon: <YouTubeIcon fontSize={isXsScreen ? "small" : "medium"} />, label: "YouTube" },
-                  { icon: <LinkedInIcon fontSize={isXsScreen ? "small" : "medium"} />, label: "LinkedIn" }
+                  { icon: <InstagramIcon fontSize={isXsScreen ? "small" : "medium"} />, label: "Instagram", href: "https://www.instagram.com/baalajiexports/profilecard/?igsh=Z3Q3a2gzd3dncmtr" },
+                  { icon: <FacebookIcon fontSize={isXsScreen ? "small" : "medium"} />, label: "Facebook", href: "https://www.facebook.com/share/1BAm7XJNnN/" },
+                  { icon: <YouTubeIcon fontSize={isXsScreen ? "small" : "medium"} />, label: "YouTube", href: "https://www.youtube.com/@baalajiexports" },
+                  { icon: <LinkedInIcon fontSize={isXsScreen ? "small" : "medium"} />, label: "LinkedIn", href: "https://www.linkedin.com/company/108236991/admin/dashboard/" }
                 ].map((item, index) => (
                   <IconButton 
                     key={index}
                     aria-label={item.label}
                     size={isXsScreen ? "small" : "medium"}
+                    component="a"
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     sx={{ 
                       color: theme.palette.customColors.lightGold,
                       bgcolor: 'rgba(255,255,255,0.1)',
@@ -208,7 +237,7 @@ const Footer = () => {
                 {[
                   { 
                     icon: <LocationOnIcon sx={{ color: theme.palette.customColors.accentGreen}} fontSize={isXsScreen ? "small" : "medium"} />, 
-                    text: "ROOM NO. 804, KRISHNAAMRUT KALWA KRICK ROAD, THANE, MUMBAI,400605", 
+                    text: "804, 8th floor  Krishnamrut Society Creek Road, Mahagiri THANE(W), MUMBAI,400605", 
                     href: "https://www.google.com/maps/search/KRISHNAAMRUT+KALWA+KRICK+ROAD+THANE", 
                     sx: { fontFamily: 'Inter' }
                   },
@@ -231,9 +260,9 @@ const Footer = () => {
                     sx: { fontFamily: 'Inter' } 
                   },
                   { 
-                    icon: <EmailIcon sx={{ color: theme.palette.customColors.accentGreen }} fontSize={isXsScreen ? "small" : "medium"} />, 
-                    text: "amansharma3833@gmail.com", 
-                    href: "mailto:amansharma3833@gmail.com", 
+icon: <EmailIcon sx={{ color: theme.palette.customColors.accentGreen }} fontSize={isXsScreen ? "small" : "medium"} />,
+                    text: "info@baalajiexports.com",
+                    href: "mailto:info@baalajiexports.com",
                     sx: { fontFamily: 'Inter' } 
                   },
                   { 
@@ -521,7 +550,7 @@ const Footer = () => {
             </Typography>
           </Box>
           <Grid container spacing={2} justifyContent="flex-start" sx={{ px: { xs: 2, sm: 4 } }}>
-            {internalLinks.map((link, index) => (
+            {marketLinks.map((link, index) => (
               <Grid item xs={6} sm={4} md={3} lg={2} key={index}>
                 <Button
                   fullWidth

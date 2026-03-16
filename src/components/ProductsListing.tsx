@@ -21,8 +21,6 @@ import type { Theme } from "@mui/material/styles";
 
 // Import product images
 import boldPeanutsImage from '@/assets/images/Home/product_h_img/bold .webp';
-import runnerPeanutsImage from '@/assets/images/Home/product_h_img/bold .webp'; // Using bold as runner
-import redSkinPeanutsImage from '@/assets/images/Home/product_h_img/RedSkinHome.webp';
 import spanishPeanutsImage from '@/assets/images/Home/product_h_img/spanish peanuts .webp';
 import tjPeanutsImage from '@/assets/images/Home/product_h_img/tj peanuts .webp';
 import longJavaPeanutsImage from '@/assets/images/Home/product_h_img/java .webp';
@@ -38,7 +36,6 @@ import mathadiHomeImage from '@/assets/images/Home/product_h_img/MathadiHome.web
 import icgv03043HomeImage from '@/assets/images/Home/product_h_img/icgv03043Home.webp';
 import icgv15090HomeImage from '@/assets/images/Home/product_h_img/icgv15090Home.webp';
 import icgv15083HomeImage from '@/assets/images/Home/product_h_img/icgv15083Home.webp';
-
 const products = [
   {
     name: 'Bold/Runner Peanuts',
@@ -83,13 +80,13 @@ const products = [
     image: redSkinHomeImage
   },
   {
-    name: 'ICGV 15084/ Girnar 4 Peanuts',
+    name: 'ICGV-15083 / girnar-4 Peanuts',
     path: '/products/icgv-15083-peanuts',
     description: 'Improved varieties with enhanced disease resistance and higher yields.',
     image: icgv15083HomeImage
   },
   {
-    name: 'ICGV 15090/ Girnar 5 Peanuts',
+    name: 'ICGV-15090 / girnar-5 Peanuts',
     path: '/products/icgv15090-peanuts',
     description: 'Research-backed variety with improved nutritional profile and yield potential.',
     image: icgv15090HomeImage
@@ -121,7 +118,7 @@ const products = [
   {
     name: 'Organic Peanuts',
     path: '/products/organic-peanuts',
-    description: 'Certified organic peanuts grown without synthetic pesticides or fertilizers.',
+    description: 'Organically grown peanuts with distinctive shape and rich nutty flavor profile.',
     image: longJavaPeanutsImage
   },
   {

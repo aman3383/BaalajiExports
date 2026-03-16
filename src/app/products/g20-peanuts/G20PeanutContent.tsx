@@ -5,7 +5,7 @@ import { Container, Box, Typography, Button, Grid, Paper, Fade, Zoom, Avatar, Ic
 import { useTheme } from "@mui/material/styles";
 import Image from 'next/image';
 import Link from 'next/link';
-import Head from 'next/head';
+
 import GradientCard from "@/components/GradientCard";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -36,63 +36,10 @@ import keyFeatureImg5 from "@/assets/images/productImg/key_features/top-view-pea
 
 import ProductIntroTiles from '@/components/ProductIntroTiles';
 import ProductCarousel from '@/components/ProductCarousel';
+import KeyFeaturesCarousel from '@/components/KeyFeaturesCarousel';
 
-const KeyFeaturesCarousel = () => {
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const images = [
-      { src: keyFeatureImg1, alt: "Key Feature Image 1" },
-      { src: keyFeatureImg2, alt: "Key Feature Image 2" },
-      { src: keyFeatureImg3, alt: "Key Feature Image 3" },
-      { src: keyFeatureImg4, alt: "Key Feature Image 4" },
-      { src: keyFeatureImg5, alt: "Key Feature Image 5" },
-    ];
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setCurrentImageIndex((prevIndex) => prevIndex === images.length - 1 ? 0 : prevIndex + 1);
-        setImageLoaded(false);
-      }, 3000);
-      return () => clearInterval(interval);
-    }, [images.length]);
-    const handlePrevImage = () => {
-      setCurrentImageIndex((prevIndex) => prevIndex === 0 ? images.length - 1 : prevIndex - 1);
-      setImageLoaded(false);
-    };
-    const handleNextImage = () => {
-      setCurrentImageIndex((prevIndex) => prevIndex === images.length - 1 ? 0 : prevIndex + 1);
-      setImageLoaded(false);
-    };
-    return (
-      <Box sx={{ position: 'relative', width: '100%', height: '100%', borderRadius: 3, overflow: 'hidden', boxShadow: '0px 10px 20px rgba(0,0,0,0.1)' }}>
-        <IconButton onClick={handlePrevImage} sx={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', zIndex: 2, bgcolor: 'rgba(255, 255, 255, 0.8)', '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' }, boxShadow: 2 }}>
-          <ChevronLeft />
-        </IconButton>
-        <IconButton onClick={handleNextImage} sx={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', zIndex: 2, bgcolor: 'rgba(255, 255, 255, 0.8)', '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' }, boxShadow: 2 }}>
-          <ChevronRight />
-        </IconButton>
-        <Fade in={true} timeout={500}>
-          <Box sx={{ width: '100%', height: '100%' }}>
-            <Image
-              src={images[currentImageIndex].src}
-              alt={images[currentImageIndex].alt}
-              fill
-              style={{ objectFit: 'cover', opacity: imageLoaded ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}
-              onLoad={() => setImageLoaded(true)}
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority={currentImageIndex === 0}
-            />
-          </Box>
-        </Fade>
-        <Box sx={{ position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 1, zIndex: 2 }}>
-          {images.map((_, index) => (
-            <Box key={index} onClick={() => setCurrentImageIndex(index)} sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: currentImageIndex === index ? 'white' : 'rgba(255,255,255,0.5)', cursor: 'pointer', transition: 'all 0.3s ease', '&:hover': { transform: 'scale(1.2)' } }} />
-          ))}
-        </Box>
-      </Box>
-    );
-  };
-  
-  const ProductSpecifications = () => {
+
+const ProductSpecifications = () => {
     const theme = useTheme();
     const specSections = {
       qualities: {
@@ -169,264 +116,6 @@ const KeyFeaturesCarousel = () => {
     const theme = useTheme();
     return (
       <Box sx={{ bgcolor: theme.palette.background.default, pb: 8 }}>
-        <Head>
-          {/* Basic Meta Tags */}
-          <title>Premium Export Quality G20 Peanuts | Balaji Exports - Best Indian Groundnuts Supplier</title>
-          <meta name="description" content="Premium G20 Peanuts from India's top groundnut exporters. FSSAI, HACCP & ISO certified. High oil content, uniform size. Bulk wholesale available. Export to UAE, Europe, USA, Africa." />
-          <meta name="keywords" content="G20 peanuts, export quality peanuts, Indian groundnuts, peanut exporters India, wholesale peanuts supplier, organic groundnuts, bulk peanuts, groundnut exporters Gujarat, peanut butter manufacturing, groundnut oil extraction, FSSAI certified peanuts, HACCP peanuts, ISO certified groundnuts, peanut exporters to UAE, groundnut companies Andhra Pradesh, wholesale groundnut prices, buy groundnuts bulk, premium Indian peanuts, edible peanuts export, groundnut exporters Rajasthan" />
-          <meta name="author" content="Balaji Exports" />
-          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-          <meta name="language" content="English" />
-          <meta name="revisit-after" content="7 days" />
-          <meta name="distribution" content="global" />
-          <meta name="rating" content="general" />
-          
-          {/* Canonical URL */}
-          <link rel="canonical" href="https://balajiexports.com/products/g20-peanuts" />
-          
-          {/* Open Graph Tags */}
-          <meta property="og:title" content="Premium Export Quality G20 Peanuts | Balaji Exports - Best Indian Groundnuts" />
-          <meta property="og:description" content="High-quality G20 Peanuts from India's fertile soils. FSSAI, HACCP & ISO certified. Perfect for peanut butter, snacks & oil extraction. Global shipping available." />
-          <meta property="og:type" content="product" />
-          <meta property="og:url" content="https://balajiexports.com/products/g20-peanuts" />
-          <meta property="og:image" content="https://balajiexports.com/images/products/g20-peanuts-featured.jpg" />
-          <meta property="og:image:alt" content="Premium G20 Peanuts - Export Quality Indian Groundnuts" />
-          <meta property="og:image:width" content="1200" />
-          <meta property="og:image:height" content="630" />
-          <meta property="og:site_name" content="Balaji Exports" />
-          <meta property="og:locale" content="en_US" />
-          <meta property="product:brand" content="Balaji Exports" />
-          <meta property="product:availability" content="in stock" />
-          <meta property="product:condition" content="new" />
-          <meta property="product:price:currency" content="USD" />
-          
-          {/* Twitter Card Tags */}
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:site" content="@BalajiExports" />
-          <meta name="twitter:creator" content="@BalajiExports" />
-          <meta name="twitter:title" content="Premium Export Quality G20 Peanuts | Balaji Exports" />
-          <meta name="twitter:description" content="High-quality G20 Peanuts from India's fertile soils. FSSAI, HACCP & ISO certified. Perfect for peanut butter, snacks & oil extraction." />
-          <meta name="twitter:image" content="https://balajiexports.com/images/products/g20-peanuts-featured.jpg" />
-          <meta name="twitter:image:alt" content="Premium G20 Peanuts - Export Quality Indian Groundnuts" />
-          
-          {/* Additional Meta Tags */}
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="format-detection" content="telephone=no" />
-          <meta name="theme-color" content="#2E7D32" />
-          <meta name="msapplication-TileColor" content="#2E7D32" />
-          
-          {/* Geo Tags */}
-          <meta name="geo.region" content="IN-GJ" />
-          <meta name="geo.placename" content="Gujarat, India" />
-          <meta name="geo.position" content="23.0225;72.5714" />
-          <meta name="ICBM" content="23.0225, 72.5714" />
-          
-          {/* Product Specific Meta Tags */}
-          <meta name="product-type" content="Agricultural Products" />
-          <meta name="product-category" content="Groundnuts & Peanuts" />
-          <meta name="origin-country" content="India" />
-          <meta name="export-markets" content="UAE, Europe, USA, Africa, Russia" />
-          <meta name="certifications" content="FSSAI, HACCP, ISO" />
-          <meta name="minimum-order" content="1 Ton" />
-          <meta name="packaging" content="25kg, 50kg PP bags, Jute bags, Vacuum packing" />
-          <meta name="shelf-life" content="12 months" />
-          
-          {/* Structured Data - JSON-LD */}
-          <script 
-            type="application/ld+json" 
-            dangerouslySetInnerHTML={{ 
-              __html: JSON.stringify({
-                "@context": "https://schema.org/",
-                "@type": "Product",
-                "name": "Premium Export Quality G20 Peanuts",
-                "description": "High-quality G20 Peanuts from India's fertile soils. FSSAI, HACCP & ISO certified. Perfect for peanut butter, snacks, oil extraction and confectionery applications.",
-                "brand": {
-                  "@type": "Brand",
-                  "name": "Balaji Exports",
-                  "url": "https://balajiexports.com"
-                },
-                "manufacturer": {
-                  "@type": "Organization",
-                  "name": "Balaji Exports",
-                  "address": {
-                    "@type": "PostalAddress",
-                    "addressCountry": "IN",
-                    "addressRegion": "Gujarat"
-                  }
-                },
-                
-                "offers": {
-                  "@type": "Offer",
-                  "url": "https://balajiexports.com/products/g20-peanuts",
-                  "priceCurrency": "USD",
-                  "availability": "https://schema.org/InStock",
-                  "itemCondition": "https://schema.org/NewCondition",
-                  "seller": {
-                    "@type": "Organization",
-                    "name": "Balaji Exports"
-                  }
-                },
-                "category": "Agricultural Products",
-                "additionalProperty": [
-                  {
-                    "@type": "PropertyValue",
-                    "name": "Origin",
-                    "value": "Gujarat, Rajasthan, Andhra Pradesh, India"
-                  },
-                  {
-                    "@type": "PropertyValue",
-                    "name": "Oil Content",
-                    "value": "46-48%"
-                  },
-                  {
-                    "@type": "PropertyValue",
-                    "name": "Moisture",
-                    "value": "7% max"
-                  },
-                  {
-                    "@type": "PropertyValue",
-                    "name": "Varieties",
-                    "value": "38/42, 40/50, 50/60, 60/70 counts"
-                  },
-                  {
-                    "@type": "PropertyValue",
-                    "name": "Certifications",
-                    "value": "FSSAI, HACCP, ISO"
-                  },
-                  {
-                    "@type": "PropertyValue",
-                    "name": "Packaging",
-                    "value": "25kg, 50kg PP bags, jute bags, vacuum packing"
-                  },
-                  {
-                    "@type": "PropertyValue",
-                    "name": "Shelf Life",
-                    "value": "12 months"
-                  }
-                ],
-                "aggregateRating": {
-                  "@type": "AggregateRating",
-                  "ratingValue": "4.8",
-                  "reviewCount": "247"
-                }
-              })
-            }} 
-          />
-          
-          {/* Organization Schema */}
-          <script 
-            type="application/ld+json" 
-            dangerouslySetInnerHTML={{ 
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                "name": "Balaji Exports",
-                "url": "https://balajiexports.com",
-                "logo": "https://balajiexports.com/images/logo.png",
-                "description": "Leading exporter of premium quality groundnuts and agricultural products from India with over 20 years of experience in international trade.",
-                "address": {
-                  "@type": "PostalAddress",
-                  "addressCountry": "IN",
-                  "addressRegion": "Gujarat"
-                },
-              })
-            }} 
-          />
-          
-          {/* Breadcrumb Schema */}
-          <script 
-            type="application/ld+json" 
-            dangerouslySetInnerHTML={{ 
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://balajiexports.com"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Products",
-                    "item": "https://balajiexports.com/products"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 3,
-                    "name": "G20 Peanuts",
-                    "item": "https://balajiexports.com/products/g20-peanuts"
-                  }
-                ]
-              })
-            }} 
-          />
-          
-          {/* FAQ Schema */}
-          <script 
-            type="application/ld+json" 
-            dangerouslySetInnerHTML={{ 
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                "mainEntity": [
-                  {
-                    "@type": "Question",
-                    "name": "What are G20 peanuts used for?",
-                    "acceptedAnswer": {
-                      "@type": "Answer",
-                      "text": "G20 peanuts are versatile and used for peanut butter production, snack manufacturing, oil extraction, confectionery applications, animal feed industry, and retail health foods."
-                    }
-                  },
-                  {
-                    "@type": "Question",
-                    "name": "What certifications do your G20 peanuts have?",
-                    "acceptedAnswer": {
-                      "@type": "Answer",
-                      "text": "Our G20 peanuts are FSSAI certified, HACCP certified, and ISO certified, ensuring the highest quality and safety standards for export."
-                    }
-                  },
-                  {
-                    "@type": "Question",
-                    "name": "What is the oil content of G20 peanuts?",
-                    "acceptedAnswer": {
-                      "@type": "Answer",
-                      "text": "G20 peanuts have an oil content of 46-48%, making them ideal for oil extraction and various industrial applications."
-                    }
-                  },
-                  {
-                    "@type": "Question",
-                    "name": "What packaging options are available?",
-                    "acceptedAnswer": {
-                      "@type": "Answer",
-                      "text": "We offer packaging in 25kg and 50kg PP bags, jute bags, vacuum packing, or customizable packaging options to meet your specific requirements."
-                    }
-                  }
-                ]
-              })
-            }} 
-          />
-          
-          {/* Alternate Language Tags (if applicable) */}
-          <link rel="alternate" hrefLang="en" href="https://balajiexports.com/products/g20-peanuts" />
-          <link rel="alternate" hrefLang="x-default" href="https://balajiexports.com/products/g20-peanuts" />
-          
-          {/* Preconnect for Performance */}
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          
-          {/* Favicon and App Icons */}
-          <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-          <link rel="manifest" href="/site.webmanifest" />
-        </Head>
-        
         <Container component="section" aria-label="Product Introduction" maxWidth="lg" sx={{ mt: { xs: 3, md: 5 } }}>
           <Grid container spacing={{ xs: 4, md: 4 }} alignItems="center" justifyContent="space-between">
             <Grid item xs={12} md={6} sx={{ width: { md: '48%' } }}>
@@ -523,10 +212,10 @@ const KeyFeaturesCarousel = () => {
               sx={{ 
                 mb: 0,
                 fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-                display: 'inline'
+                lineHeight: 1.2
               }}
             >
-              Key{' '}
+              Key
             </Typography>
             <Typography 
               variant="h2" 
@@ -536,74 +225,82 @@ const KeyFeaturesCarousel = () => {
               sx={{ 
                 color: theme.palette.secondary.main,
                 fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-                display: 'inline'
+                lineHeight: 1.2
               }}
             >
-              Features
+              {" "}Features
             </Typography>
-            <Box 
-              sx={{ 
-                width: '80px', 
-                height: '4px', 
-                backgroundColor: theme.palette.primary.main, 
-                mx: 'auto', 
-                mt: 2, 
-                mb: 4,
-                borderRadius: '2px'
-              }} 
-            />
           </Box>
-          <Box sx={{ 
-            display: 'flex', 
-            flexDirection: { xs: 'column', md: 'row' },
-            justifyContent: 'space-between',
-            gap: { xs: 4, md: '4%' }
-          }}>
-            {/* Features Section - Left side */}
-            <Box sx={{ width: { xs: '100%', md: '48%' } }}>
-              <Paper 
-                elevation={3}
-                sx={{ 
-                  borderRadius: 3,
-                  background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark || '#1a3526'} 100%)`,
-                  transition: 'transform 0.3s, box-shadow 0.3s',
-                  '&:hover': {
-                    transform: 'translateY(-6px)',
-                    boxShadow: '0px 10px 20px rgba(0,0,0,0.2)'
-                  }
-                }}
-              >
-                {[
-                  { title: "High Yield", description: "High oil content for greater yield" },
-                  { title: "Consistent Size", description: "Uniform size for efficient processing" },
-                  { title: "Versatile Applications", description: "Suitable for multiple end uses: oil, snacks, and exports" },
-                  { title: "Disease Resistance", description: "Robust resistance to diseases and pests" },
-                  { title: "Quality & Storage", description: "Consistent quality and easy storage" }
-                ].map((feature, index, array) => (
-                  <Box 
-                    key={index}
-                    sx={{
-                      p: 3,
-                      borderBottom: index !== array.length - 1 ? `1px solid rgba(255,255,255,0.1)` : 'none',
-                    }}
-                  >
-                    <Typography 
-                      variant="h6" 
-                      component="h3" 
+          
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: 4, alignItems: 'stretch' }}>
+            {/* Left Column - Key Features List */}
+            <Box sx={{ flex: { lg: 1 }, display: 'flex', flexDirection: 'column', gap: 3 }}>
+              {[
+                {
+                  title: "Premium Quality Standards",
+                  description: "FSSAI, HACCP, and ISO certified with rigorous quality control processes ensuring food safety and international compliance.",
+                  icon: <CheckIcon sx={{ fontSize: 28, color: theme.palette.primary.main }} />
+                },
+                {
+                  title: "High Oil Content (45-50%)",
+                  description: "Superior oil extraction yield making them ideal for peanut oil production and industrial applications.",
+                  icon: <BarChartIcon sx={{ fontSize: 28, color: theme.palette.primary.main }} />
+                },
+                {
+                  title: "Uniform Size & Shape",
+                  description: "Consistent 38/42, 40/50, 50/60 count sizes ensuring perfect roasting and processing results.",
+                  icon: <EmojiEventsIcon sx={{ fontSize: 28, color: theme.palette.primary.main }} />
+                },
+                {
+                  title: "Rich Nutritional Profile",
+                  description: "High protein content (25-30%), healthy fats, vitamins, and minerals making them perfect for health foods.",
+                  icon: <InfoIcon sx={{ fontSize: 28, color: theme.palette.primary.main }} />
+                },
+                {
+                  title: "Excellent Shelf Life",
+                  description: "12+ months shelf life when properly stored, maintaining quality and freshness for extended periods.",
+                  icon: <LocalShippingIcon sx={{ fontSize: 28, color: theme.palette.primary.main }} />
+                }
+              ].map((feature, index) => (
+                <Paper
+                  key={index}
+                  elevation={3}
+                  sx={{
+                    p: 3,
+                    borderRadius: 3,
+                    background: theme.customGradients.greenDark,
+                    color: theme.palette.customColors.lightGold,
+                    transition: 'transform 0.3s, box-shadow 0.3s',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: '0px 8px 16px rgba(0,0,0,0.3)'
+                    },
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: 2
+                  }}
+                >
+                  <Box sx={{ flexShrink: 0, mt: 0.5 }}>
+                    {feature.icon}
+                  </Box>
+                  <Box sx={{ flex: 1 }}>
+                    <Typography
+                      variant="h6"
+                      component="h3"
                       fontFamily="Lato, sans-serif"
                       fontWeight="bold"
                       sx={{ 
                         color: theme.palette.customColors.darkGold, 
-                        mb: 1.5,
+                        mb: 1,
                         fontSize: { xs: '1.1rem', md: '1.25rem' }
                       }}
                     >
                       {feature.title}
                     </Typography>
                     <Typography 
-                      variant="body2"
-                      fontFamily="Inter, sans-serif"
-                      sx={{
+                      variant="body2" 
+                      fontFamily="Inter, sans-serif" 
+                      sx={{ 
                         color: theme.palette.customColors.lightGold,
                         lineHeight: 1.6
                       }}
@@ -611,14 +308,12 @@ const KeyFeaturesCarousel = () => {
                       {feature.description}
                     </Typography>
                   </Box>
-                ))}
-              </Paper>
+                </Paper>
+              ))}
             </Box>
-            {/* Image Carousel - Right side */}
-            <Box sx={{ 
-              width: { xs: '100%', md: '48%' },
-              height: { xs: '300px', md: '400px' }
-            }}>
+            
+            {/* Right Column - Image Carousel */}
+            <Box sx={{ flex: { lg: 1 }, height: { xs: '300px', lg: '500px' } }}>
               <KeyFeaturesCarousel />
             </Box>
           </Box>
