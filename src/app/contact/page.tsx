@@ -28,6 +28,7 @@ import type { SelectChangeEvent } from "@mui/material/Select";
 import i18nCountries from "i18n-iso-countries";
 import english from "i18n-iso-countries/langs/en.json";
 import { getCountryCallingCode } from "libphonenumber-js";
+import type { CountryCode } from "libphonenumber-js";
 
 const ContactUs = () => {
   const GOOGLE_SCRIPT_URL =
@@ -71,7 +72,9 @@ const ContactUs = () => {
       const options = Object.entries(names)
         .map(([iso, name]) => {
           try {
-            const dial = getCountryCallingCode(iso);
+            // `i18n-iso-countries` returns ISO codes as strings.
+            // `libphonenumber-js` expects a narrower `CountryCode` type, so we cast safely.
+            const dial = getCountryCallingCode(iso as CountryCode);
             if (!dial) return null;
             return { iso, name, dial: String(dial) };
           } catch {
