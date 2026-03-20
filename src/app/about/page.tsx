@@ -1,3 +1,4 @@
+// src/app/about/page.tsx
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import AboutContent from './AboutContent';
