@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Box,
@@ -25,6 +25,9 @@ import SendIcon from "@mui/icons-material/Send";
 import Image from "next/image";
 import Logo from "@/assets/images/Logo.png";
 import type { SelectChangeEvent } from "@mui/material/Select";
+import i18nCountries from "i18n-iso-countries";
+import english from "i18n-iso-countries/langs/en.json";
+import { getCountryCallingCode } from "libphonenumber-js";
 
 const ContactUs = () => {
   const GOOGLE_SCRIPT_URL =
@@ -34,6 +37,7 @@ const ContactUs = () => {
     name: "",
     email: "",
     phone: "",
+    countryCode: "",
     message: "",
     product: "",
     productTypes: [] as string[]
@@ -43,6 +47,7 @@ const ContactUs = () => {
     name: false,
     email: false,
     phone: false,
+    countryCode: false,
     message: false,
     product: false,
     productTypes: false
@@ -55,6 +60,33 @@ const ContactUs = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [countryOptions, setCountryOptions] = useState<Array<{ iso: string; name: string; dial: string }>>([]);
+
+  useEffect(() => {
+    try {
+      // Build the dropdown options on the client to avoid SSR issues with locale/metadata.
+      i18nCountries.registerLocale(english);
+      const names = i18nCountries.getNames("en", { select: "official" }) as Record<string, string>;
+
+      const options = Object.entries(names)
+        .map(([iso, name]) => {
+          try {
+            const dial = getCountryCallingCode(iso);
+            if (!dial) return null;
+            return { iso, name, dial: String(dial) };
+          } catch {
+            return null;
+          }
+        })
+        .filter(Boolean) as Array<{ iso: string; name: string; dial: string }>;
+
+      options.sort((a, b) => a.name.localeCompare(b.name));
+      setCountryOptions(options);
+    } catch (err) {
+      // If this fails, we still want the form to render.
+      console.error("Failed to build country code list", err);
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
     const { name, value } = e.target;
@@ -83,11 +115,21 @@ const ContactUs = () => {
     });
   };
 
+  const handleCountryCodeChange = (event: SelectChangeEvent<string>) => {
+    const { value } = event.target;
+    setFormData({
+      ...formData,
+      countryCode: value
+    });
+  };
+
   const validateForm = () => {
+    const phoneDigits = formData.phone.replace(/\D/g, "");
     const newErrors = {
       name: false, // Name is no longer required
       email: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email),
-      phone: !/^[0-9]{10}$/.test(formData.phone.replace(/[-()\s]/g, "")),
+      phone: !/^[0-9]{6,15}$/.test(phoneDigits),
+      countryCode: !formData.countryCode,
       message: false, // Message is no longer required
       product: false, // Product is no longer required
       productTypes: false // Product types are no longer required
@@ -101,7 +143,8 @@ const ContactUs = () => {
     const params = new URLSearchParams();
     params.set("name", data.name);
     params.set("email", data.email);
-    params.set("phone", data.phone);
+    params.set("countryCode", data.countryCode);
+    params.set("phone", data.phone.replace(/\D/g, ""));
     params.set("message", data.message);
     params.set("product", data.product);
     params.set("productTypes", Array.isArray(data.productTypes) ? data.productTypes.join(", ") : String(data.productTypes || ""));
@@ -132,6 +175,7 @@ const ContactUs = () => {
           name: "",
           email: "",
           phone: "",
+          countryCode: "",
           message: "",
           product: "",
           productTypes: []
@@ -305,20 +349,52 @@ const ContactUs = () => {
                 color="primary"
                 disabled={isSubmitting}
               />
-              <TextField
-                required
-                fullWidth
-                id="phone"
-                name="phone"
-                label="Phone Number"
-                value={formData.phone}
-                onChange={handleChange}
-                error={errors.phone}
-                helperText={errors.phone ? "Please enter a valid 10-digit phone number" : ""}
-                variant="outlined"
-                color="primary"
-                disabled={isSubmitting}
-              />
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={4}>
+                  <FormControl fullWidth disabled={isSubmitting} error={errors.countryCode}>
+                    <InputLabel id="country-code-label">Country Code</InputLabel>
+                    <Select
+                      labelId="country-code-label"
+                      id="countryCode"
+                      name="countryCode"
+                      value={formData.countryCode}
+                      label="Country Code"
+                      onChange={handleCountryCodeChange}
+                    >
+                      <MenuItem value="">
+                        <em>Select Country</em>
+                      </MenuItem>
+                      {countryOptions.length === 0 ? (
+                        <MenuItem value="" disabled>
+                          Loading...
+                        </MenuItem>
+                      ) : (
+                        countryOptions.map((c) => (
+                          <MenuItem key={c.iso} value={`+${c.dial}`}>
+                            {c.name} (+{c.dial})
+                          </MenuItem>
+                        ))
+                      )}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={8}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="phone"
+                    name="phone"
+                    label="Phone Number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    error={errors.phone}
+                    helperText={errors.phone ? "Please enter a valid phone number (6-15 digits)" : ""}
+                    variant="outlined"
+                    color="primary"
+                    disabled={isSubmitting}
+                  />
+                </Grid>
+              </Grid>
               <TextField
                 required
                 fullWidth
