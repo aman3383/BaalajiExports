@@ -2,25 +2,12 @@
 
 import React from 'react';
 import { Box, Container, Typography, Paper, useTheme, CircularProgress } from '@mui/material';
-import Head from 'next/head';
 import BreadcrumbsBlog from '@/components/BreadcrumbsBlog';
 
 interface DynamicBlogContentProps {
   slug: string;
   blogData?: any;
 }
-
-// SEO component for meta tags
-const SEO = ({ blogData }: { blogData: any }) => {
-  React.useEffect(() => {
-    if (blogData && typeof window !== 'undefined' && typeof document !== 'undefined') {
-      document.title = blogData.seo?.title || blogData.title;
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) metaDesc.setAttribute('content', blogData.seo?.description || 'Blog content from Balaji Exports');
-    }
-  }, [blogData]);
-  return null;
-};
 
 export default function DynamicBlogContent({ slug, blogData }: DynamicBlogContentProps) {
   const theme = useTheme();
@@ -48,28 +35,12 @@ export default function DynamicBlogContent({ slug, blogData }: DynamicBlogConten
 
   return (
     <>
-      <Head>
-        <title>{blogData.seo?.title || blogData.title}</title>
-        <meta name="description" content={blogData.seo?.description || 'Blog content from Balaji Exports'} />
-        {blogData.seo?.metaTags?.map((tag: any, index: number) => {
-          if (tag.name) {
-            return <meta key={index} name={tag.name} content={tag.content} />;
-          } else if (tag.property) {
-            return <meta key={index} property={tag.property} content={tag.content} />;
-          }
-          return null;
-        })}
-        {blogData.seo?.linkTags?.map((link: any, index: number) => (
-          <link key={index} rel={link.rel} href={link.href} />
-        ))}
-      </Head>
-      <Box sx={{ 
+      <Box sx={{
         backgroundColor: theme.palette.background.default,
         minHeight: '100vh',
         pt: { xs: 4, md: 6 },
         pb: 8
       }}>
-        <SEO blogData={blogData} />
         <Container maxWidth="md">
           {/* Blog Content */}
           <div className="blog-content">
@@ -250,6 +221,5 @@ export default function DynamicBlogContent({ slug, blogData }: DynamicBlogConten
         </Container>
         <BreadcrumbsBlog country={blogData.country || blogData.title} />
       </Box>
-    </>
   );
 } 

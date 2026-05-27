@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import { getPageSEO } from '@/lib/utils/seo';
 import { notFound } from 'next/navigation';
 
-// Force static generation for better crawling
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 // Import all the existing product content components
 import BlanchedPeanutContent from '../blanched-peanuts/BlanchedPeanutContent';
