@@ -34,7 +34,6 @@ export default function DynamicBlogContent({ slug, blogData }: DynamicBlogConten
   }
 
   return (
-    <>
       <Box sx={{
         backgroundColor: theme.palette.background.default,
         minHeight: '100vh',
