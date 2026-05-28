@@ -8,50 +8,17 @@ import CircleIcon from '@mui/icons-material/Circle';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import Head from 'next/head';
 import BreadcrumbsBlog from '@/components/BreadcrumbsBlog';
-
-// SEO component for meta tags
-const SEO = () => {
-  React.useEffect(() => {
-    document.title = "Vietnam's Thriving Peanut Market | Balaji Exports - Indian Groundnut Exporters";
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', "Vietnam is rapidly emerging as a dynamic destination in the global peanut value chain. With changing domestic cultivation trends, rising health consciousness, and a robust food processing industry, Vietnam offers a lucrative market for premium quality peanuts.");
-    // Add more meta tags if needed
-  }, []);
-  return null;
-};
 
 export default function VietnamBlog() {
   const theme = useTheme();
   return (
-    <>
-      <Head>
-        <title>Vietnam's Thriving Peanut Market | Balaji Exports - Indian Groundnut Exporters</title>
-        <meta name="description" content="Vietnam is rapidly emerging as a dynamic destination in the global peanut value chain. With changing domestic cultivation trends, rising health consciousness, and a robust food processing industry, Vietnam offers a lucrative market for premium quality peanuts." />
-        <meta name="keywords" content="Vietnam peanut market 2024, Indian peanut exports Vietnam, groundnut import Vietnam, peanut butter market Vietnam, Bold 40/50 peanuts, TJ 50/60 variety, Vietnam food processing industry, Indian groundnut suppliers" />
-        <link rel="canonical" href="https://balajiexports.com/blogs/vietnam" />
-        {/* Open Graph */}
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="Vietnam's Thriving Peanut Market" />
-        <meta property="og:description" content="Vietnam is rapidly emerging as a dynamic destination in the global peanut value chain. With changing domestic cultivation trends, rising health consciousness, and a robust food processing industry, Vietnam offers a lucrative market for premium quality peanuts." />
-        <meta property="og:url" content="https://balajiexports.com/blogs/vietnam" />
-        <meta property="og:site_name" content="Balaji Exports" />
-        <meta property="og:image" content="https://balajiexports.com/images/vietnam-peanut-market-analysis.jpg" />
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@BalajiExports" />
-        <meta name="twitter:title" content="Vietnam's Thriving Peanut Market" />
-        <meta name="twitter:description" content="Vietnam is rapidly emerging as a dynamic destination in the global peanut value chain." />
-        <meta name="twitter:image" content="https://balajiexports.com/images/vietnam-peanut-market-twitter.jpg" />
-      </Head>
       <Box sx={{ 
         backgroundColor: theme.palette.background.default,
         minHeight: '100vh',
         pt: { xs: 4, md: 6 },
         pb: 8
       }}>
-        <SEO />
         <Container maxWidth="md">
           {/* Blog Content */}
           <div className="blog-content">
@@ -621,6 +588,5 @@ export default function VietnamBlog() {
         </Container>
         <BreadcrumbsBlog country="Vietnam" />
       </Box>
-    </>
   );
 } 

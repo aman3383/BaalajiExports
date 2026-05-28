@@ -3,43 +3,11 @@
 import React from 'react';
 import { Box, Container, Typography, Paper, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
-import Head from 'next/head';
 import BreadcrumbsBlog from '@/components/BreadcrumbsBlog';
-
-// SEO component for meta tags
-const SEO = () => {
-  React.useEffect(() => {
-    document.title = 'Turkey Peanut Import Market | India-Turkey Agricultural Trade';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', 'Understanding the growing peanut import market in Turkey and the flourishing agricultural trade partnership between India and Turkey.');
-    // Add more meta tags if needed
-  }, []);
-  return null;
-};
 
 export default function TurkeyBlog() {
   const theme = useTheme();
   return (
-    <>
-      <Head>
-        <title>Turkey Peanut Import Market | India-Turkey Agricultural Trade</title>
-        <meta name="description" content="Understanding the growing peanut import market in Turkey and the flourishing agricultural trade partnership between India and Turkey." />
-        <meta name="keywords" content="Turkey peanut market 2024, Turkish groundnut imports, India Turkey trade, yer fıstığı imports, Bold peanuts Turkey, Java peanuts Turkey, Turkish peanut demand, Indian peanut exporters Turkey" />
-        <link rel="canonical" href="https://balajiexports.com/blogs/turkey" />
-        {/* Open Graph */}
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="Turkey Peanut Import Market | India-Turkey Agricultural Trade" />
-        <meta property="og:description" content="Understanding the growing peanut import market in Turkey and the flourishing agricultural trade partnership between India and Turkey." />
-        <meta property="og:url" content="https://balajiexports.com/blogs/turkey" />
-        <meta property="og:site_name" content="Balaji Exports" />
-        <meta property="og:image" content="https://balajiexports.com/images/turkey-peanut-market-analysis.jpg" />
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@BalajiExports" />
-        <meta name="twitter:title" content="Turkey Peanut Import Market | India-Turkey Agricultural Trade" />
-        <meta name="twitter:description" content="Understanding the growing peanut import market in Turkey and the flourishing agricultural trade partnership between India and Turkey." />
-        <meta name="twitter:image" content="https://balajiexports.com/images/turkey-peanut-market-twitter.jpg" />
-      </Head>
       <Box sx={{ 
         backgroundColor: theme.palette.background.default,
         minHeight: '100vh',
@@ -443,7 +411,5 @@ export default function TurkeyBlog() {
           </div>
         </Container>
       </Box>
-      <SEO />
-    </>
   );
 } 

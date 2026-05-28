@@ -3,43 +3,11 @@
 import React from 'react';
 import { Box, Container, Typography, Paper, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
-import Head from 'next/head';
 import BreadcrumbsBlog from '@/components/BreadcrumbsBlog';
-
-// SEO component for meta tags
-const SEO = () => {
-  React.useEffect(() => {
-    document.title = 'India-USA Agricultural Trade | Peanut Exports';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', 'Discover the flourishing agricultural partnership between India and the USA, with a special focus on rising peanut exports and growing demand.');
-    // Add more meta tags if needed
-  }, []);
-  return null;
-};
 
 export default function USABlog() {
   const theme = useTheme();
   return (
-    <>
-      <Head>
-        <title>India-USA Agricultural Trade | Peanut Exports</title>
-        <meta name="description" content="Discover the flourishing agricultural partnership between India and the USA, with a special focus on rising peanut exports and growing demand." />
-        <meta name="keywords" content="USA peanut market 2024, Indian peanut exports USA, groundnut import USA, peanut butter market USA, Bold peanuts, Java peanuts, Blanched peanuts, Redskin peanuts, Indian groundnut suppliers" />
-        <link rel="canonical" href="https://balajiexports.com/blogs/usa" />
-        {/* Open Graph */}
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="India-USA Agricultural Trade | Peanut Exports" />
-        <meta property="og:description" content="Discover the flourishing agricultural partnership between India and the USA, with a special focus on rising peanut exports and growing demand." />
-        <meta property="og:url" content="https://balajiexports.com/blogs/usa" />
-        <meta property="og:site_name" content="Balaji Exports" />
-        <meta property="og:image" content="https://balajiexports.com/images/usa-peanut-market-analysis.jpg" />
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@BalajiExports" />
-        <meta name="twitter:title" content="India-USA Agricultural Trade | Peanut Exports" />
-        <meta name="twitter:description" content="Discover the flourishing agricultural partnership between India and the USA, with a special focus on rising peanut exports and growing demand." />
-        <meta name="twitter:image" content="https://balajiexports.com/images/usa-peanut-market-twitter.jpg" />
-      </Head>
       <Box sx={{ 
         backgroundColor: theme.palette.background.default,
         minHeight: '100vh',
@@ -586,6 +554,5 @@ export default function USABlog() {
         </Container>
         <BreadcrumbsBlog country="USA" />
       </Box>
-    </>
   );
 } 

@@ -2,50 +2,17 @@
 
 import React from 'react';
 import { Box, Container, Typography, Paper, useTheme } from '@mui/material';
-import Head from 'next/head';
 import BreadcrumbsBlog from '@/components/BreadcrumbsBlog';
-
-// SEO component for meta tags
-const SEO = () => {
-  React.useEffect(() => {
-    document.title = 'India-Netherlands Agricultural Trade | Peanut Exports';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', 'Discover the growing agricultural partnership between India and the Netherlands, with a special focus on peanut exports and the Dutch gateway to European markets.');
-    // Add more meta tags if needed
-  }, []);
-  return null;
-};
 
 export default function NetherlandsBlog() {
   const theme = useTheme();
   return (
-    <>
-      <Head>
-        <title>India-Netherlands Agricultural Trade | Peanut Exports</title>
-        <meta name="description" content="Discover the growing agricultural partnership between India and the Netherlands, with a special focus on peanut exports and the Dutch gateway to European markets." />
-        <meta name="keywords" content="Netherlands peanut market 2024, Indian peanut exports Netherlands, groundnut import Netherlands, peanut butter market Netherlands, Indian groundnut suppliers" />
-        <link rel="canonical" href="https://balajiexports.com/blogs/netherlands" />
-        {/* Open Graph */}
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="India-Netherlands Agricultural Trade | Peanut Exports" />
-        <meta property="og:description" content="Discover the growing agricultural partnership between India and the Netherlands, with a special focus on peanut exports and the Dutch gateway to European markets." />
-        <meta property="og:url" content="https://balajiexports.com/blogs/netherlands" />
-        <meta property="og:site_name" content="Balaji Exports" />
-        <meta property="og:image" content="https://balajiexports.com/images/netherlands-peanut-market-analysis.jpg" />
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@BalajiExports" />
-        <meta name="twitter:title" content="India-Netherlands Agricultural Trade | Peanut Exports" />
-        <meta name="twitter:description" content="Discover the growing agricultural partnership between India and the Netherlands, with a special focus on peanut exports and the Dutch gateway to European markets." />
-        <meta name="twitter:image" content="https://balajiexports.com/images/netherlands-peanut-market-twitter.jpg" />
-      </Head>
       <Box sx={{ 
         backgroundColor: theme.palette.background.default,
         minHeight: '100vh',
         pt: { xs: 4, md: 6 },
         pb: 8
       }}>
-        <SEO />
         <Container maxWidth="md">
           {/* Blog Content */}
           <div className="blog-content">
@@ -552,6 +519,5 @@ export default function NetherlandsBlog() {
         </Container>
         <BreadcrumbsBlog country="Netherlands" />
       </Box>
-    </>
   );
 } 
