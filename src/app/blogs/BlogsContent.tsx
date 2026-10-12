@@ -21,7 +21,10 @@ function transformBlogToCard(blog: any) {
     description: extractContentPreview(blog.content, 25) || (blog.seo?.description ?? ''),
     to: `/blogs/${blog.slug}`,
     readTime: blog.readTime || '5 min read',
-    feature: blog.slug.charAt(0).toUpperCase() + blog.slug.slice(1) + ' Market',  };
+    feature: blog.slug.charAt(0).toUpperCase() + blog.slug.slice(1) + ' Market',
+    // Only absolute URLs (images stored by the SEO panel); old relative /uploads paths no longer exist
+    image: /^https?:\/\//.test(blog.image || '') ? blog.image : '',
+  };
 }
 
 export default function BlogsContent({ blogs }: { blogs: any[] }) {
@@ -165,46 +168,64 @@ export default function BlogsContent({ blogs }: { blogs: any[] }) {
                       }
                     }}
                   >
-                    <Box
-                      className="feature-image"
-                      sx={{
-                        height: { xs: 220, md: 320 },
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        position: 'relative',
-                        zIndex: 2,
-                        transition: 'transform 0.5s ease',
-                        p: 4,
-                        background: 'radial-gradient(circle at 30% 70%, rgba(109, 140, 63, 0.1) 0%, transparent 70%)'
-                      }}
-                    >
-                      <Typography
-                        variant="h3"
+                    {card.image ? (
+                      <Box
+                        component="img"
+                        className="feature-image"
+                        src={card.image}
+                        alt={card.subtitle}
                         sx={{
-                          color: 'customColors.lightGold',
-                          fontFamily: 'Lato, sans-serif',
-                          fontWeight: 700,
-                          textAlign: 'center',
+                          display: 'block',
+                          width: '100%',
+                          height: { xs: 220, md: 320 },
+                          objectFit: 'cover',
                           position: 'relative',
-                          fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
-                          '&::after': {
-                            content: '""',
-                            position: 'absolute',
-                            bottom: -10,
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            width: 60,
-                            height: 3,
-                            backgroundColor: 'customColors.lightGold',
-                            opacity: 0.7,
-                            borderRadius: 1
-                          }
+                          zIndex: 2,
+                          transition: 'transform 0.5s ease'
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        className="feature-image"
+                        sx={{
+                          height: { xs: 220, md: 320 },
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          position: 'relative',
+                          zIndex: 2,
+                          transition: 'transform 0.5s ease',
+                          p: 4,
+                          background: 'radial-gradient(circle at 30% 70%, rgba(109, 140, 63, 0.1) 0%, transparent 70%)'
                         }}
                       >
-                        {card.feature}
-                      </Typography>
-                    </Box>
+                        <Typography
+                          variant="h3"
+                          sx={{
+                            color: 'customColors.lightGold',
+                            fontFamily: 'Lato, sans-serif',
+                            fontWeight: 700,
+                            textAlign: 'center',
+                            position: 'relative',
+                            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+                            '&::after': {
+                              content: '""',
+                              position: 'absolute',
+                              bottom: -10,
+                              left: '50%',
+                              transform: 'translateX(-50%)',
+                              width: 60,
+                              height: 3,
+                              backgroundColor: 'customColors.lightGold',
+                              opacity: 0.7,
+                              borderRadius: 1
+                            }
+                          }}
+                        >
+                          {card.feature}
+                        </Typography>
+                      </Box>
+                    )}
                   </Box>
                   <CardContent 
                     sx={{ 

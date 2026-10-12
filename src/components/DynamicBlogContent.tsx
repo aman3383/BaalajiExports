@@ -108,7 +108,7 @@ export default function DynamicBlogContent({ slug, blogData }: DynamicBlogConten
                   {blogData.continent.toUpperCase()} MARKET
                 </Typography>
               )}
-              {blogData.image && (
+              {/^https?:\/\//.test(blogData.image || '') && (
                 <Box
                   component="img"
                   src={blogData.image}
